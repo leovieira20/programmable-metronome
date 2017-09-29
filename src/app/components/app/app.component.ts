@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
     }));
 
     this.hotKeys.add(new Hotkey('6', (): boolean => {
-      this.metronomeComponent.changeResolution(6);
+      this.metronomeComponent.changeResolution(5);
       return false;
     }));
   }

@@ -6,6 +6,7 @@ import {MaterializeModule} from 'angular2-materialize';
 import {SchedulerComponent} from './components/scheduler/scheduler.component';
 import {MetronomeComponent} from './components/metronome/metronome.component';
 import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {HttpClientModule} from '@angular/common/http';
     BrowserModule,
     HotkeyModule.forRoot(),
     HttpClientModule,
-    MaterializeModule
+    MaterializeModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

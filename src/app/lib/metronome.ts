@@ -43,8 +43,8 @@ export class Metronome {
     this.scheduler.changeTempo(amount);
   }
 
-  public changeResolution(resolution: NoteResolution, isTriplet: boolean = false) {
-    this.scheduler.changeResolution(resolution, isTriplet);
+  public changeResolution(resolution: any) {
+    this.scheduler.changeResolution(resolution.res, resolution.isTriplet);
   }
 
   public schedule() {
