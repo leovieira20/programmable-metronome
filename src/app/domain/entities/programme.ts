@@ -6,7 +6,7 @@ export class Programme {
     constructor(public tempo: number,
                 public noteResolution: NoteResolution,
                 public isTriplet: boolean,
-                private beatCount: number,
+                public beatCount: number,
                 private beatResolution: number) {
     }
 

@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Metronome} from '../../lib/metronome';
 import {Bus} from '../../lib/Bus';
 import {AudioListener} from '../../domain/listeners/audioListener';
-import {NoteResolution} from "../../domain/entities/noteResolution";
+import ResolutionOptions from '../../domain/entities/resolutionOptions';
 
 @Component({
   selector: 'metronome',
@@ -30,13 +30,7 @@ export class MetronomeComponent implements OnInit {
   ngOnInit(): void {
     this.tempo = this.metronome.tempo;
 
-    this.resolutionOptions = [
-      {id: 1, name: 'Quarter notes', res: NoteResolution.QUARTER, isTriplet: false},
-      {id: 2, name: '8th notes', res: NoteResolution.EIGTH, isTriplet: false},
-      {id: 3, name: '8th notes triplets', res: NoteResolution.EIGTH, isTriplet: true},
-      {id: 4, name: '16th notes', res: NoteResolution.SIXTEENTH, isTriplet: false},
-      {id: 5, name: '16th notes triplets', res: NoteResolution.SIXTEENTH, isTriplet: true}
-    ];
+    this.resolutionOptions = ResolutionOptions;
 
     this.resolution = this.resolutionOptions[0].id;
   }

@@ -7,7 +7,7 @@ export class Scheduler {
   private programmes: Array<any> = [];
   private setupList: Array<Programme> = [];
 
-  public addProgrammeSetup(setup: Programme) {
+  public addStep(setup: Programme) {
     this.setupList.push(setup);
     this.createProgrammesFromSetups();
   }
@@ -25,7 +25,7 @@ export class Scheduler {
     currentSetup.tempo += amount;
 
     this.clearSetups();
-    this.addProgrammeSetup(currentSetup);
+    this.addStep(currentSetup);
   }
 
   public changeResolution(noteResolution: NoteResolution, isTriplet: boolean) {
@@ -34,7 +34,7 @@ export class Scheduler {
     currentSetup.isTriplet = isTriplet;
 
     this.clearSetups();
-    this.addProgrammeSetup(currentSetup);
+    this.addStep(currentSetup);
   }
 
   public resetSequence() {

@@ -1,1 +1,54 @@
-<div></div>
+<div>
+  <h2>Scheduler</h2>
+
+  <div class="divider"></div>
+
+  <div class="row">
+    <form [formGroup]="stepForm" novalidate>
+      <div class="col s3">
+        <div class="input-field inline">
+          <input type="number" [ngClass]="{'invalid': stepForm.get('tempo').invalid}" formControlName="tempo">
+          <label>Tempo</label>
+        </div>
+      </div>
+
+      <div class="col s3">
+        <div class="input-field inline">
+          <select #resolutionSelect formControlName="resolution" materialize="material_select">
+            <option value="" disabled selected>Resolution</option>
+            <option *ngFor="let option of resolutionOptions" [value]="option.id">{{option.name}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col s3">
+        <div class="input-field inline">
+          <input type="number" class="validate" [ngClass]="{'invalid': stepForm.get('beats').invalid}" formControlName="beats">
+          <label>Beats</label>
+        </div>
+      </div>
+
+      <div class="col s3">
+        <div class="input-field inline">
+          <button class="waves-effect waves-light btn" (click)="addStep()" [disabled]="stepForm.invalid">Add</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="section">
+    <h5>Programme List</h5>
+  </div>
+
+  <div class="row" *ngIf="stepList.length > 0">
+    <ul class="collection">
+      <li *ngFor="let p of stepList; let i = index" class="collection-item">
+        <div>Tempo: {{p.tempo}} Resolution: {{p.noteResolution}} Beats: {{p.beatCount}}
+          <a href="#!" class="secondary-content" (click)="removeStep(i)">
+            <i class="material-icons">delete</i>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
