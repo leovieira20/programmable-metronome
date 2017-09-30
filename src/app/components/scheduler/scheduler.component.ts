@@ -11,7 +11,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class SchedulerComponent implements OnInit {
   stepList: Array<Programme> = [];
   stepForm: FormGroup;
-  resolution: any;
   programme: Programme;
   resolutionOptions = ResolutionOptions;
 
@@ -34,8 +33,9 @@ export class SchedulerComponent implements OnInit {
   }
 
   public addStep() {
-    const stepFromModel = this.stepForm.value;
-    const p = new Programme(stepFromModel.tempo, stepFromModel.resolution, false, stepFromModel.beats, 4);
+    const stepForm = this.stepForm.value;
+    const resolution = this.resolutionOptions.find(x => x.id === Number(stepForm.resolution));
+    const p = new Programme(stepForm.tempo, resolution, stepForm.beats);
 
     this.stepList.push(p);
     this.scheduler.addStep(p);

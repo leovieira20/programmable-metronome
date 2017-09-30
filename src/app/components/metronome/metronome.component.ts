@@ -15,9 +15,9 @@ export class MetronomeComponent implements OnInit {
 
   public tempo: number;
   public isPlaying: boolean;
-  public resolution: any;
+  public selectedResolutionId: number;
   public gain = 100;
-  public resolutionOptions: Array<any>;
+  public resolutionOptions = ResolutionOptions;
   public tempoChange = new EventEmitter();
   public isPlayingChange = new EventEmitter();
   public gainChange = new EventEmitter();
@@ -29,10 +29,7 @@ export class MetronomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.tempo = this.metronome.tempo;
-
-    this.resolutionOptions = ResolutionOptions;
-
-    this.resolution = this.resolutionOptions[0].id;
+    this.selectedResolutionId = this.resolutionOptions[0].id;
   }
 
   public togglePlaying(): void {
@@ -43,7 +40,7 @@ export class MetronomeComponent implements OnInit {
 
   public changeResolution(resolutionId: number) {
     const resolution = this.resolutionOptions.find(x => x.id === Number(resolutionId));
-    this.resolution = resolutionId;
+    this.selectedResolutionId = resolutionId;
 
     this.metronome.changeResolution(resolution);
   }

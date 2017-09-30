@@ -23,7 +23,7 @@
         </div>
         <div class="row">
             <div class="input-field">
-                <select #resolutionSelect [(ngModel)]="resolution" materialize="material_select" (change)="changeResolution($event.target.value)">
+                <select [(ngModel)]="resolutionId" materialize="material_select" (change)="changeResolution($event.target.value)">
                     <option value="" disabled selected>Resolution</option>
                     <option *ngFor="let option of resolutionOptions" [value]="option.id">{{option.name}}</option>
                 </select>

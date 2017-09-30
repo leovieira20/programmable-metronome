@@ -12,7 +12,6 @@ export class Metronome {
   private _tempo = 120.0;
   private scheduleAheadTime = 0.1;
   private lookahead = 25.0;
-  private beatTimes = 4;
   private isPlaying = false;
   private nextNoteTime: number;
   private tick: Observable<any>;
@@ -43,38 +42,25 @@ export class Metronome {
     this.scheduler.changeTempo(amount);
   }
 
-  public changeResolution(resolution: any) {
-    this.scheduler.changeResolution(resolution.res, resolution.isTriplet);
+  public changeResolution(resolution: NoteResolution) {
+    this.scheduler.changeResolution(resolution);
   }
 
   public schedule() {
     while (this.nextNoteTime < this.audioContextService.audioContext.currentTime + this.scheduleAheadTime) {
       const setup = this.scheduler.getNextProgramme();
-      this.scheduleNote(setup, this.nextNoteTime);
-      this.nextNote(setup.programme);
+      this.bus.tickChannel.next({
+        accentType: setup.accentType,
+        time: this.nextNoteTime
+      });
+      this.calculateNextNote(setup);
     }
   }
 
-  private scheduleNote(setup: any, time: number) {
-    let accentType: AccentType;
-    if (setup.beatNumber % setup.programme.getNumberOfSteps() === 0) {
-      accentType = AccentType.BAR_HEAD;
-    } else if (setup.beatNumber % this.beatTimes === 0) {
-      accentType = AccentType.BEAT_HEAD;
-    } else {
-      accentType = AccentType.SUB_BEAT;
-    }
-
-    this.bus.tickChannel.next({
-      accentType: accentType,
-      time: time
-    });
-  }
-
-  private nextNote(programme: Programme) {
+  private calculateNextNote(programme: Programme) {
+    const noteResolution = programme.noteResolution;
     const millisecondsPerBeat = 60 / programme.tempo;
-    const millisecondsPerNote = (millisecondsPerBeat * programme.noteResolution) * (programme.isTriplet ? 0.67 : 1);
-    this.nextNoteTime += millisecondsPerNote;
+    this.nextNoteTime += (millisecondsPerBeat * noteResolution.duration) * (noteResolution.isTriplet ? 0.67 : 1);
   }
 
   get tempo(): number {

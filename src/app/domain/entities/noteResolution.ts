@@ -1,5 +1,8 @@
-export enum NoteResolution {
-    QUARTER = 1,
-    EIGTH = 0.5,
-    SIXTEENTH = 0.25
+export class NoteResolution {
+  constructor(public id: number,
+              public name: string,
+              public duration: number,
+              public beatMultiplier: number,
+              public isTriplet: boolean) {
+  }
 }

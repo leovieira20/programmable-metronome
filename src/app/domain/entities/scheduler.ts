@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Programme} from './programme';
 import {NoteResolution} from './noteResolution';
+import {AccentType} from "./accentType";
 
 @Injectable()
 export class Scheduler {
-  private programmes: Array<any> = [];
+  private programmes: Array<Programme> = [];
   private setupList: Array<Programme> = [];
 
   public addStep(setup: Programme) {
@@ -28,10 +29,9 @@ export class Scheduler {
     this.addStep(currentSetup);
   }
 
-  public changeResolution(noteResolution: NoteResolution, isTriplet: boolean) {
+  public changeResolution(noteResolution: NoteResolution) {
     const currentSetup = this.setupList[0];
     currentSetup.noteResolution = noteResolution;
-    currentSetup.isTriplet = isTriplet;
 
     this.clearSetups();
     this.addStep(currentSetup);
@@ -45,12 +45,11 @@ export class Scheduler {
     this.programmes = [];
 
     for (const setup of this.setupList) {
-      for (let i = 0; i < setup.getNumberOfSteps(); i++) {
-        setup.beatNumber = i;
-        this.programmes.push({
-          beatNumber: i,
-          programme: setup
-        });
+      const numberOfSteps = setup.getNumberOfSteps();
+      for (let i = 0; i < numberOfSteps; i++) {
+        const accentType = i % setup.noteResolution.beatMultiplier === 0 ? AccentType.BEAT_HEAD : AccentType.SUB_BEAT;
+        const p = new Programme(setup.tempo, setup.noteResolution, setup.beats, accentType);
+        this.programmes.push(p);
       }
     }
   }

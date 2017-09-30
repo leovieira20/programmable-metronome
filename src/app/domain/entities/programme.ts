@@ -1,16 +1,14 @@
 import {NoteResolution} from './noteResolution';
+import {AccentType} from './accentType';
 
 export class Programme {
-    public beatNumber: number;
+  constructor(public tempo: number,
+              public noteResolution: NoteResolution,
+              public beats: number,
+              public accentType: AccentType) {
+  }
 
-    constructor(public tempo: number,
-                public noteResolution: NoteResolution,
-                public isTriplet: boolean,
-                public beatCount: number,
-                private beatResolution: number) {
-    }
-
-    getNumberOfSteps(): number {
-        return this.beatCount * this.beatResolution;
-    }
+  getNumberOfSteps(): number {
+    return this.beats * this.noteResolution.beatMultiplier;
+  }
 }
