@@ -11,25 +11,13 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class SchedulerComponent implements OnInit {
   stepList: Array<Programme> = [];
   stepForm: FormGroup;
-  programme: Programme;
   resolutionOptions = ResolutionOptions;
 
   constructor(private scheduler: Scheduler, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.stepForm = this.fb.group({
-      tempo: [120, [
-        Validators.required,
-        Validators.min(30),
-        Validators.max(250)
-      ]],
-      resolution: [ResolutionOptions[0].id, Validators.required],
-      beats: [4, [
-        Validators.required,
-        Validators.min(1)
-      ]]
-    });
+    this.createFormModel();
   }
 
   public addStep() {
@@ -42,6 +30,22 @@ export class SchedulerComponent implements OnInit {
   }
 
   public removeStep(i: number) {
-    this.stepList.splice(i, 1);
+    const removedStep = this.stepList.splice(i, 1)[0];
+    this.scheduler.removeStep(removedStep);
+  }
+
+  private createFormModel() {
+    this.stepForm = this.fb.group({
+      tempo: [120, [
+        Validators.required,
+        Validators.min(30),
+        Validators.max(250)
+      ]],
+      resolution: [ResolutionOptions[0].id, Validators.required],
+      beats: [4, [
+        Validators.required,
+        Validators.min(1)
+      ]]
+    });
   }
 }

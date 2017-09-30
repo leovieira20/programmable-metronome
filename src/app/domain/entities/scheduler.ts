@@ -13,6 +13,12 @@ export class Scheduler {
     this.createProgrammesFromSetups();
   }
 
+  removeStep(s: Programme) {
+    const stepIndex = this.setupList.indexOf(s);
+    this.setupList.splice(stepIndex, 1);
+    this.createProgrammesFromSetups();
+  }
+
   public getNextProgramme(): any {
     if (this.programmes.length === 0) {
       this.createProgrammesFromSetups();
@@ -48,7 +54,8 @@ export class Scheduler {
       const numberOfSteps = setup.getNumberOfSteps();
       for (let i = 0; i < numberOfSteps; i++) {
         const accentType = i % setup.noteResolution.beatMultiplier === 0 ? AccentType.BEAT_HEAD : AccentType.SUB_BEAT;
-        const p = new Programme(setup.tempo, setup.noteResolution, setup.beats, accentType);
+        const p = new Programme(setup.tempo, setup.noteResolution, setup.beats);
+        p.accentType = accentType;
         this.programmes.push(p);
       }
     }
