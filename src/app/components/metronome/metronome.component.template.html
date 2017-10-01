@@ -14,14 +14,6 @@
             </div>
         </div>
         <div class="row">
-            <label>Gain:</label>
-            <div class="input-field">
-                <p class="range-field">
-                    <input type="range" min="0.0" max="100.0" step="{{gainAmount}}" [(value)]="gain">
-                </p>
-            </div>
-        </div>
-        <div class="row">
             <div class="input-field">
                 <select [(ngModel)]="resolutionId" materialize="material_select" (change)="changeResolution($event.target.value)">
                     <option value="" disabled selected>Resolution</option>

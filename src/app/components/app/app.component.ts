@@ -13,8 +13,10 @@ import {AudioListener} from '../../domain/listeners/audioListener';
   providers: [Bus, Metronome, AudioContextService, Scheduler, AudioListener]
 })
 export class AppComponent implements OnInit {
+  private _gainAmount = 5;
   @ViewChild(MetronomeComponent)
   private metronomeComponent;
+
   public tempo: number;
   public isPlaying: boolean;
   public resolution = 4;
@@ -22,6 +24,7 @@ export class AppComponent implements OnInit {
 
   constructor(private hotKeys: HotkeysService,
               private audioService: AudioContextService,
+              private bus: Bus,
               audioListener: AudioListener) {
   }
 
@@ -46,12 +49,12 @@ export class AppComponent implements OnInit {
     }));
 
     this.hotKeys.add(new Hotkey('up', (): boolean => {
-      this.metronomeComponent.increaseGain();
+      this.changeGainValue(this._gainAmount);
       return false;
     }));
 
     this.hotKeys.add(new Hotkey('down', (): boolean => {
-      this.metronomeComponent.decreaseGain();
+      this.changeGainValue(-this._gainAmount);
       return false;
     }));
 
@@ -79,5 +82,14 @@ export class AppComponent implements OnInit {
       this.metronomeComponent.changeResolution(5);
       return false;
     }));
+  }
+
+  private changeGainValue(amount: number) {
+    if ((this.gain === 0 && amount < 1) || (this.gain === 100 && amount > 1)) {
+      return;
+    }
+
+    this.gain += amount;
+    this.bus.gainChannel.next(amount);
   }
 }
