@@ -1,13 +1,17 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Metronome} from '../../lib/metronome';
 import ResolutionOptions from '../../domain/entities/resolutionOptions';
+import {IStepProvider} from '../../domain/entities/IStepProvider';
+import {Programme} from '../../domain/entities/programme';
 
 @Component({
   selector: 'metronome',
   templateUrl: './metronome.component.template.html',
 })
-export class MetronomeComponent implements OnInit {
+export class MetronomeComponent implements OnInit, IStepProvider {
   private _tempoAmount = 5;
+  private _isActive = false;
+  private _stepSetup: Programme;
 
   public tempo: number;
   public isPlaying: boolean;
@@ -24,6 +28,13 @@ export class MetronomeComponent implements OnInit {
     this.selectedResolutionId = this.resolutionOptions[0].id;
   }
 
+  toggleState(isMetronomeActive: boolean) {
+    this._isActive = isMetronomeActive;
+    if (this._isActive) {
+      this.metronome.setStepProvider(this);
+    }
+  }
+
   public togglePlaying(): void {
     this.isPlaying = !this.isPlaying;
     this.isPlayingChange.next(this.isPlaying);
@@ -34,7 +45,7 @@ export class MetronomeComponent implements OnInit {
     const resolution = this.resolutionOptions.find(x => x.id === Number(resolutionId));
     this.selectedResolutionId = resolutionId;
 
-    this.metronome.changeResolution(resolution);
+    this._stepSetup.noteResolution = resolution;
   }
 
   public increaseTempo() {
@@ -45,6 +56,14 @@ export class MetronomeComponent implements OnInit {
     this.changeTempoValue(-this._tempoAmount);
   }
 
+  getNextStep(): Programme {
+    if (this._stepSetup === undefined) {
+      this._stepSetup = new Programme(this.tempo, this.resolutionOptions.find(x => x.id === this.selectedResolutionId), 1);
+    }
+
+    return this._stepSetup.getNextStep();
+  }
+
   private changeTempoValue(tempoAmount: number) {
     if ((this.tempo === 30 && tempoAmount < 1) || (this.tempo === 250 && tempoAmount > 1)) {
       return;
@@ -52,6 +71,6 @@ export class MetronomeComponent implements OnInit {
 
     this.tempo += tempoAmount;
     this.tempoChange.next(this.tempo);
-    this.metronome.changeTempo(tempoAmount);
+    this._stepSetup.tempo = this.tempo;
   }
 }

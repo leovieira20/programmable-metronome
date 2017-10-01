@@ -1,22 +1,26 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Bus} from '../../lib/Bus';
 import {AudioContextService} from '../../lib/AudioContextService';
-import {Scheduler} from '../../domain/entities/scheduler';
 import {MetronomeComponent} from '../metronome/metronome.component';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {Metronome} from '../../lib/metronome';
 import {AudioListener} from '../../domain/listeners/audioListener';
+import {SchedulerComponent} from '../scheduler/scheduler.component';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  providers: [Bus, Metronome, AudioContextService, Scheduler, AudioListener]
+  providers: [Bus, Metronome, AudioContextService, AudioListener]
 })
 export class AppComponent implements OnInit {
-  private _gainAmount = 5;
   @ViewChild(MetronomeComponent)
-  private metronomeComponent;
+  private metronomeComponent: MetronomeComponent;
+  @ViewChild(SchedulerComponent)
+  private schedulerComponent: SchedulerComponent;
 
+  public gainAmount = 5;
+  public schedulerMode: FormControl;
   public tempo: number;
   public isPlaying: boolean;
   public resolution = 4;
@@ -29,7 +33,15 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.schedulerMode = new FormControl();
+    this.schedulerMode.valueChanges.subscribe(x => this.toggleScheduler(x));
+    this.schedulerMode.setValue(true);
     this.configureHotKeys();
+  }
+
+  toggleScheduler(schedulerModeValue: boolean) {
+    this.metronomeComponent.toggleState(schedulerModeValue);
+    this.schedulerComponent.toggleState(schedulerModeValue);
   }
 
   private configureHotKeys() {
@@ -49,12 +61,12 @@ export class AppComponent implements OnInit {
     }));
 
     this.hotKeys.add(new Hotkey('up', (): boolean => {
-      this.changeGainValue(this._gainAmount);
+      this.changeGainValue(this.gainAmount);
       return false;
     }));
 
     this.hotKeys.add(new Hotkey('down', (): boolean => {
-      this.changeGainValue(-this._gainAmount);
+      this.changeGainValue(-this.gainAmount);
       return false;
     }));
 

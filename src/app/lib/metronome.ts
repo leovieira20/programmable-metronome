@@ -2,10 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable, Subscription} from 'rxjs/Rx';
 import {Bus} from './Bus';
 import {AudioContextService} from './AudioContextService';
-import {NoteResolution} from '../domain/entities/noteResolution';
-import {Scheduler} from '../domain/entities/scheduler';
 import {Programme} from '../domain/entities/programme';
-import {Subject} from 'rxjs/Subject';
+import {IStepProvider} from '../domain/entities/IStepProvider';
 
 @Injectable()
 export class Metronome {
@@ -16,12 +14,10 @@ export class Metronome {
   private nextNoteTime: number;
   private tick: Observable<any>;
   private subscription: Subscription;
-
-  public onRequestForNextStep = new Subject();
+  private stepProvider: IStepProvider;
 
   constructor(private bus: Bus,
-              private audioContextService: AudioContextService,
-              private scheduler: Scheduler) {
+              private audioContextService: AudioContextService) {
 
     this.tick = Observable.interval(this.lookahead);
   }
@@ -39,24 +35,16 @@ export class Metronome {
     }
   }
 
-  public changeTempo(amount: number) {
-    this.scheduler.changeTempo(amount);
-  }
-
-  public changeResolution(resolution: NoteResolution) {
-    this.scheduler.changeResolution(resolution);
-  }
-
   public schedule() {
     while (this.nextNoteTime < this.audioContextService.audioContext.currentTime + this.scheduleAheadTime) {
-      this.onRequestForNextStep.next();
-    }
-  }
+      const s = this.stepProvider.getNextStep();
+      this.bus.tickChannel.next({
+        accentType: s.accentType,
+        time: this.nextNoteTime
+      });
 
-  private calculateNextNote(programme: Programme) {
-    const noteResolution = programme.noteResolution;
-    const millisecondsPerBeat = 60 / programme.tempo;
-    this.nextNoteTime += (millisecondsPerBeat * noteResolution.duration) * (noteResolution.isTriplet ? 0.67 : 1);
+      this.calculateNextNote(s);
+    }
   }
 
   get tempo(): number {
@@ -64,11 +52,15 @@ export class Metronome {
   }
 
   setNextStep(s: any) {
-    this.bus.tickChannel.next({
-      accentType: s.accentType,
-      time: this.nextNoteTime
-    });
+  }
 
-    this.calculateNextNote(s);
+  setStepProvider(stepProvider: IStepProvider) {
+    this.stepProvider = stepProvider;
+  }
+
+  private calculateNextNote(programme: Programme) {
+    const noteResolution = programme.noteResolution;
+    const millisecondsPerBeat = 60 / programme.tempo;
+    this.nextNoteTime += (millisecondsPerBeat * noteResolution.duration) * (noteResolution.isTriplet ? 0.67 : 1);
   }
 }
