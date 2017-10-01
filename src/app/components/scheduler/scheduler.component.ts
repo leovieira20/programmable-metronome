@@ -38,8 +38,8 @@ export class SchedulerComponent implements OnInit, IStepProvider {
     this.stepList.push(p);
   }
 
-  public removeStep(i: number) {
-    this.stepList.splice(i, 1);
+  public removeStep(s: Programme) {
+    this.stepList.splice(this.stepList.indexOf(s), 1);
   }
 
   private createFormModel() {

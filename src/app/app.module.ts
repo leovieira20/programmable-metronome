@@ -9,13 +9,15 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {JsonPipe} from "@angular/common";
 import { GlobalControlsComponent } from './components/global-controls/global-controls/global-controls.component';
+import { SchedulerItemComponent } from './components/scheduler/scheduler-item/scheduler-item/scheduler-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SchedulerComponent,
     MetronomeComponent,
-    GlobalControlsComponent
+    GlobalControlsComponent,
+    SchedulerItemComponent
   ],
   imports: [
     BrowserModule,

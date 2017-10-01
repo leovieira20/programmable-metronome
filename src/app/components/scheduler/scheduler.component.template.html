@@ -42,12 +42,8 @@
 
   <div class="row" *ngIf="stepList.length > 0">
     <ul class="collection">
-      <li *ngFor="let p of stepList; let i = index" class="collection-item" [ngClass]="{'active' : p.isActive}">
-        <div>Tempo: {{p.tempo}} Resolution: {{p.noteResolution.name}} Beats: {{p.beats}}
-          <a href="#!" class="secondary-content" (click)="removeStep(i)">
-            <i class="material-icons">delete</i>
-          </a>
-        </div>
+      <li *ngFor="let s of stepList" class="collection-item" [ngClass]="{'active' : s.isActive}">
+        <scheduler-item [step]="s" (onStepRemoved)="removeStep($event)"></scheduler-item>
       </li>
     </ul>
   </div>
