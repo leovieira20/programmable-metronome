@@ -7,6 +7,7 @@ import {Metronome} from '../../lib/metronome';
 import {AudioListener} from '../../domain/listeners/audioListener';
 import {SchedulerComponent} from '../scheduler/scheduler.component';
 import {FormControl} from '@angular/forms';
+import {GlobalControlsComponent} from "../global-controls/global-controls/global-controls.component";
 
 @Component({
   selector: 'app-root',
@@ -18,13 +19,13 @@ export class AppComponent implements OnInit {
   private metronomeComponent: MetronomeComponent;
   @ViewChild(SchedulerComponent)
   private schedulerComponent: SchedulerComponent;
+  @ViewChild(GlobalControlsComponent)
+  private globalControlsComponent: GlobalControlsComponent;
 
   public gainAmount = 5;
-  public schedulerMode: FormControl;
   public tempo: number;
   public isPlaying: boolean;
   public resolution = 4;
-  public gain = 100;
 
   constructor(private hotKeys: HotkeysService,
               private audioService: AudioContextService,
@@ -33,13 +34,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.schedulerMode = new FormControl();
-    this.schedulerMode.valueChanges.subscribe(x => this.toggleScheduler(x));
-    this.schedulerMode.setValue(true);
     this.configureHotKeys();
   }
 
-  toggleScheduler(schedulerModeValue: boolean) {
+  public toggleScheduler(schedulerModeValue: boolean) {
     this.metronomeComponent.toggleState(schedulerModeValue);
     this.schedulerComponent.toggleState(schedulerModeValue);
   }
@@ -61,12 +59,12 @@ export class AppComponent implements OnInit {
     }));
 
     this.hotKeys.add(new Hotkey('up', (): boolean => {
-      this.changeGainValue(this.gainAmount);
+      this.globalControlsComponent.changeGainValue(this.gainAmount);
       return false;
     }));
 
     this.hotKeys.add(new Hotkey('down', (): boolean => {
-      this.changeGainValue(-this.gainAmount);
+      this.globalControlsComponent.changeGainValue(-this.gainAmount);
       return false;
     }));
 
@@ -94,14 +92,5 @@ export class AppComponent implements OnInit {
       this.metronomeComponent.changeResolution(5);
       return false;
     }));
-  }
-
-  private changeGainValue(amount: number) {
-    if ((this.gain === 0 && amount < 1) || (this.gain === 100 && amount > 1)) {
-      return;
-    }
-
-    this.gain += amount;
-    this.bus.gainChannel.next(amount);
   }
 }

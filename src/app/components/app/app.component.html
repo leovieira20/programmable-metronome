@@ -1,26 +1,6 @@
 <div class="row">
-  <div class="col s3">
-    <div class="switch">
-      <label>
-        Scheduler
-        <input type="checkbox" [formControl]="schedulerMode">
-        <span class="lever"></span>
-        Metronome
-      </label>
-    </div>
-
-  </div>
-
-  <div class="col s6">
-    <label>Gain:</label>
-    <div class="input-field">
-      <p class="range-field">
-        <input type="range" min="0.0" max="100.0" step="{{gainAmount}}" [(ngModel)]="gain">
-      </p>
-    </div>
-  </div>
+  <global-controls (onToggleScheduler)="toggleScheduler($event)"></global-controls>
 </div>
-
 <div class="row">
   <div class="col s4">
     <scheduler></scheduler>

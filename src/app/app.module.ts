@@ -8,12 +8,14 @@ import {MetronomeComponent} from './components/metronome/metronome.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {JsonPipe} from "@angular/common";
+import { GlobalControlsComponent } from './components/global-controls/global-controls/global-controls.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SchedulerComponent,
-    MetronomeComponent
+    MetronomeComponent,
+    GlobalControlsComponent
   ],
   imports: [
     BrowserModule,
