@@ -4,6 +4,7 @@ import {Bus} from './Bus';
 import {AudioContextService} from './AudioContextService';
 import {Programme} from '../domain/entities/programme';
 import {IStepProvider} from '../domain/entities/IStepProvider';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class Metronome {
@@ -15,6 +16,7 @@ export class Metronome {
   private tick: Observable<any>;
   private subscription: Subscription;
   private stepProvider: IStepProvider;
+  public isPlayingStatus = new Subject<boolean>();
 
   constructor(private bus: Bus,
               private audioContextService: AudioContextService) {
@@ -22,28 +24,11 @@ export class Metronome {
     this.tick = Observable.interval(this.lookahead);
   }
 
-  public play() {
-    this.isPlaying = !this.isPlaying;
-
-    if (this.isPlaying) {
-      this.nextNoteTime = this.audioContextService.audioContext.currentTime;
-      this.subscription = this.tick.subscribe(x => {
-        this.schedule();
-      });
+  public togglePlay() {
+    if (!this.isPlaying) {
+      this.startPlaying();
     } else {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  public schedule() {
-    while (this.nextNoteTime < this.audioContextService.audioContext.currentTime + this.scheduleAheadTime) {
-      const s = this.stepProvider.getNextStep();
-      this.bus.tickChannel.next({
-        accentType: s.accentType,
-        time: this.nextNoteTime
-      });
-
-      this.calculateNextNote(s);
+      this.stopPlaying();
     }
   }
 
@@ -51,11 +36,44 @@ export class Metronome {
     return this._tempo;
   }
 
-  setNextStep(s: any) {
+  public setStepProvider(stepProvider: IStepProvider) {
+    this.stepProvider = stepProvider;
   }
 
-  setStepProvider(stepProvider: IStepProvider) {
-    this.stepProvider = stepProvider;
+  private startPlaying() {
+    this.isPlaying = true;
+    this.isPlayingStatus.next(true);
+
+    this.nextNoteTime = this.audioContextService.audioContext.currentTime;
+    this.subscription = this.tick.subscribe(x => {
+      try {
+        this.schedule();
+      } catch (ex) {
+        this.stopPlaying();
+      }
+    });
+  }
+
+  private stopPlaying() {
+    this.isPlaying = false;
+    this.subscription.unsubscribe();
+    this.isPlayingStatus.next(false);
+  }
+
+  private schedule() {
+    while (this.nextNoteTime < this.audioContextService.audioContext.currentTime + this.scheduleAheadTime) {
+      const s = this.stepProvider.getNextStep();
+      if (s === null || s === undefined) {
+        throw new Error('Step not defined');
+      } else {
+        this.bus.tickChannel.next({
+          accentType: s.accentType,
+          time: this.nextNoteTime
+        });
+
+        this.calculateNextNote(s);
+      }
+    }
   }
 
   private calculateNextNote(programme: Programme) {

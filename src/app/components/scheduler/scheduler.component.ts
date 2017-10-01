@@ -26,20 +26,21 @@ export class SchedulerComponent implements IStepProvider {
   }
 
   public getNextStep() {
+    if (this.stepList.length === 0) {
+      return null;
+    }
+
     let activeSetup = this.stepList.find(x => x.isActive);
     if (activeSetup === undefined) {
       this.stepList[0].isActive = true;
       activeSetup = this.stepList[0];
 
       const nextStep = activeSetup.getNextStep();
-      this.metronome.setNextStep(nextStep);
       return nextStep;
     }
 
     if (activeSetup.hasNextStep()) {
       const nextStep = activeSetup.getNextStep();
-      this.metronome.setNextStep(nextStep);
-
       return nextStep;
     } else {
       if (this.stepList.length > 1) {
@@ -55,7 +56,6 @@ export class SchedulerComponent implements IStepProvider {
       }
 
       const nextStep = activeSetup.getNextStep();
-      this.metronome.setNextStep(nextStep);
       return nextStep;
     }
   }

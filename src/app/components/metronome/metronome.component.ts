@@ -26,6 +26,10 @@ export class MetronomeComponent implements OnInit, IStepProvider {
   ngOnInit(): void {
     this.tempo = this.metronome.tempo;
     this.selectedResolutionId = this.resolutionOptions[0].id;
+    this.metronome.isPlayingStatus.subscribe(x => {
+      this.isPlaying = x;
+      this.isPlayingChange.next(x);
+    });
   }
 
   toggleState(isMetronomeActive: boolean) {
@@ -36,9 +40,7 @@ export class MetronomeComponent implements OnInit, IStepProvider {
   }
 
   public togglePlaying(): void {
-    this.isPlaying = !this.isPlaying;
-    this.isPlayingChange.next(this.isPlaying);
-    this.metronome.play();
+    this.metronome.togglePlay();
   }
 
   public changeResolution(resolutionId: number) {
