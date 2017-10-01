@@ -38,10 +38,6 @@ export class SchedulerComponent implements OnInit, IStepProvider {
     this.stepList.push(p);
   }
 
-  public removeStep(s: Programme) {
-    this.stepList.splice(this.stepList.indexOf(s), 1);
-  }
-
   private createFormModel() {
     this.stepForm = this.fb.group({
       tempo: [120, [

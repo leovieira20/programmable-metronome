@@ -9,6 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { GlobalControlsComponent } from './components/global-controls/global-controls.component';
 import { SchedulerItemComponent } from './components/scheduler/scheduler-item/scheduler-item.component';
+import { SchedulerItemListComponent } from './components/scheduler/scheduler-item-list/scheduler-item-list.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SchedulerItemComponent } from './components/scheduler/scheduler-item/sc
     SchedulerComponent,
     MetronomeComponent,
     GlobalControlsComponent,
-    SchedulerItemComponent
+    SchedulerItemComponent,
+    SchedulerItemListComponent
   ],
   imports: [
     BrowserModule,
