@@ -1,7 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Programme} from '../../domain/entities/programme';
-import ResolutionOptions from '../../domain/entities/resolutionOptions';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Metronome} from '../../lib/metronome';
 import {IStepProvider} from '../../domain/entities/IStepProvider';
 
@@ -9,18 +7,11 @@ import {IStepProvider} from '../../domain/entities/IStepProvider';
   selector: 'scheduler',
   templateUrl: './scheduler.component.template.html'
 })
-export class SchedulerComponent implements OnInit, IStepProvider {
+export class SchedulerComponent implements IStepProvider {
   private _isActive = false;
   stepList: Array<Programme> = [];
-  stepForm: FormGroup;
-  resolutionOptions = ResolutionOptions;
 
-  constructor(private metronome: Metronome,
-              private fb: FormBuilder) {
-  }
-
-  ngOnInit(): void {
-    this.createFormModel();
+  constructor(private metronome: Metronome) {
   }
 
   toggleState(isMetronomeActive: boolean) {
@@ -30,27 +21,8 @@ export class SchedulerComponent implements OnInit, IStepProvider {
     }
   }
 
-  public addStep() {
-    const stepForm = this.stepForm.value;
-    const resolution = this.resolutionOptions.find(x => x.id === Number(stepForm.resolution));
-    const p = new Programme(stepForm.tempo, resolution, stepForm.beats);
-
-    this.stepList.push(p);
-  }
-
-  private createFormModel() {
-    this.stepForm = this.fb.group({
-      tempo: [120, [
-        Validators.required,
-        Validators.min(30),
-        Validators.max(250)
-      ]],
-      resolution: [ResolutionOptions[0].id, Validators.required],
-      beats: [4, [
-        Validators.required,
-        Validators.min(1)
-      ]]
-    });
+  public addStep(s: Programme) {
+    this.stepList.push(s);
   }
 
   public getNextStep() {
