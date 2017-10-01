@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {Observable, Subscription} from 'rxjs/Rx';
 import {Bus} from './Bus';
 import {AudioContextService} from './AudioContextService';
-import {AccentType} from '../domain/entities/accentType';
 import {NoteResolution} from '../domain/entities/noteResolution';
 import {Scheduler} from '../domain/entities/scheduler';
 import {Programme} from '../domain/entities/programme';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class Metronome {
@@ -16,6 +16,8 @@ export class Metronome {
   private nextNoteTime: number;
   private tick: Observable<any>;
   private subscription: Subscription;
+
+  public onRequestForNextStep = new Subject();
 
   constructor(private bus: Bus,
               private audioContextService: AudioContextService,
@@ -34,7 +36,6 @@ export class Metronome {
       });
     } else {
       this.subscription.unsubscribe();
-      this.scheduler.resetSequence();
     }
   }
 
@@ -48,12 +49,7 @@ export class Metronome {
 
   public schedule() {
     while (this.nextNoteTime < this.audioContextService.audioContext.currentTime + this.scheduleAheadTime) {
-      const setup = this.scheduler.getNextProgramme();
-      this.bus.tickChannel.next({
-        accentType: setup.accentType,
-        time: this.nextNoteTime
-      });
-      this.calculateNextNote(setup);
+      this.onRequestForNextStep.next();
     }
   }
 
@@ -65,5 +61,14 @@ export class Metronome {
 
   get tempo(): number {
     return this._tempo;
+  }
+
+  setNextStep(s: any) {
+    this.bus.tickChannel.next({
+      accentType: s.accentType,
+      time: this.nextNoteTime
+    });
+
+    this.calculateNextNote(s);
   }
 }

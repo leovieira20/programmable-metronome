@@ -42,7 +42,7 @@
 
   <div class="row" *ngIf="stepList.length > 0">
     <ul class="collection">
-      <li *ngFor="let p of stepList; let i = index" class="collection-item">
+      <li *ngFor="let p of stepList; let i = index" class="collection-item" [ngClass]="{'active' : p.isActive}">
         <div>Tempo: {{p.tempo}} Resolution: {{p.noteResolution.name}} Beats: {{p.beats}}
           <a href="#!" class="secondary-content" (click)="removeStep(i)">
             <i class="material-icons">delete</i>

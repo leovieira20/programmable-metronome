@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Programme} from './programme';
 import {NoteResolution} from './noteResolution';
-import {AccentType} from "./accentType";
 
 @Injectable()
 export class Scheduler {
@@ -19,12 +18,22 @@ export class Scheduler {
     this.createProgrammesFromSetups();
   }
 
-  public getNextProgramme(): any {
+  public getNextProgramme(): Programme {
     if (this.programmes.length === 0) {
       this.createProgrammesFromSetups();
     }
 
-    return this.programmes.shift();
+    let activeProgramme = this.programmes.shift();
+
+    const currentActiveStep = this.setupList.find(x => x.isActive);
+    if (currentActiveStep === undefined) {
+      return activeProgramme;
+    }
+
+    activeProgramme = this.setupList.find(x => x.id === activeProgramme.id);
+    activeProgramme.isActive = true;
+
+    return activeProgramme;
   }
 
   public changeTempo(amount: number) {
@@ -51,12 +60,8 @@ export class Scheduler {
     this.programmes = [];
 
     for (const setup of this.setupList) {
-      const numberOfSteps = setup.getNumberOfSteps();
-      for (let i = 0; i < numberOfSteps; i++) {
-        const accentType = i % setup.noteResolution.beatMultiplier === 0 ? AccentType.BEAT_HEAD : AccentType.SUB_BEAT;
-        const p = new Programme(setup.tempo, setup.noteResolution, setup.beats);
-        p.accentType = accentType;
-        this.programmes.push(p);
+      for (const s of setup.getSteps()) {
+        this.programmes.push(s);
       }
     }
   }

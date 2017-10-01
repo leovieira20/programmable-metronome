@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Scheduler} from '../../domain/entities/scheduler';
 import {Programme} from '../../domain/entities/programme';
 import ResolutionOptions from '../../domain/entities/resolutionOptions';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Metronome} from '../../lib/metronome';
 
 @Component({
   selector: 'scheduler',
@@ -13,7 +13,9 @@ export class SchedulerComponent implements OnInit {
   stepForm: FormGroup;
   resolutionOptions = ResolutionOptions;
 
-  constructor(private scheduler: Scheduler, private fb: FormBuilder) {
+  constructor(private metronome: Metronome,
+              private fb: FormBuilder) {
+    metronome.onRequestForNextStep.subscribe(x => this.getNextStep());
   }
 
   ngOnInit(): void {
@@ -26,12 +28,10 @@ export class SchedulerComponent implements OnInit {
     const p = new Programme(stepForm.tempo, resolution, stepForm.beats);
 
     this.stepList.push(p);
-    this.scheduler.addStep(p);
   }
 
   public removeStep(i: number) {
-    const removedStep = this.stepList.splice(i, 1)[0];
-    this.scheduler.removeStep(removedStep);
+    this.stepList.splice(i, 1);
   }
 
   private createFormModel() {
@@ -47,5 +47,34 @@ export class SchedulerComponent implements OnInit {
         Validators.min(1)
       ]]
     });
+  }
+
+  private getNextStep() {
+    let activeSetup = this.stepList.find(x => x.isActive);
+    if (activeSetup === undefined) {
+      this.stepList[0].isActive = true;
+      activeSetup = this.stepList[0];
+
+      this.metronome.setNextStep(activeSetup.getNextStep());
+      return;
+    }
+
+    if (activeSetup.hasNextStep()) {
+      this.metronome.setNextStep(activeSetup.getNextStep());
+    } else {
+      if (this.stepList.length > 1) {
+        activeSetup.isActive = false;
+        if (this.stepList.indexOf(activeSetup) === (this.stepList.length - 1)) {
+          activeSetup = this.stepList[0];
+          activeSetup.isActive = true;
+        } else {
+          const nextIndex = this.stepList.indexOf(activeSetup) + 1;
+          activeSetup = this.stepList[nextIndex];
+          activeSetup.isActive = true;
+        }
+      }
+
+      this.metronome.setNextStep(activeSetup.getNextStep());
+    }
   }
 }

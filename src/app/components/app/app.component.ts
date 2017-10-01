@@ -4,11 +4,13 @@ import {AudioContextService} from '../../lib/AudioContextService';
 import {Scheduler} from '../../domain/entities/scheduler';
 import {MetronomeComponent} from '../metronome/metronome.component';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
+import {Metronome} from '../../lib/metronome';
+import {AudioListener} from '../../domain/listeners/audioListener';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  providers: [Bus, AudioContextService, Scheduler]
+  providers: [Bus, Metronome, AudioContextService, Scheduler, AudioListener]
 })
 export class AppComponent implements OnInit {
   @ViewChild(MetronomeComponent)
@@ -18,7 +20,9 @@ export class AppComponent implements OnInit {
   public resolution = 4;
   public gain = 100;
 
-  constructor(private hotKeys: HotkeysService) {
+  constructor(private hotKeys: HotkeysService,
+              private audioService: AudioContextService,
+              audioListener: AudioListener) {
   }
 
   ngOnInit(): void {

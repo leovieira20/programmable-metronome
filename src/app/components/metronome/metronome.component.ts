@@ -1,13 +1,11 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Metronome} from '../../lib/metronome';
 import {Bus} from '../../lib/Bus';
-import {AudioListener} from '../../domain/listeners/audioListener';
 import ResolutionOptions from '../../domain/entities/resolutionOptions';
 
 @Component({
   selector: 'metronome',
   templateUrl: './metronome.component.template.html',
-  providers: [AudioListener, Metronome, Bus]
 })
 export class MetronomeComponent implements OnInit {
   private _gainAmount = 5;
@@ -23,7 +21,6 @@ export class MetronomeComponent implements OnInit {
   public gainChange = new EventEmitter();
 
   constructor(private metronome: Metronome,
-              private audioListener: AudioListener,
               private bus: Bus) {
   }
 
