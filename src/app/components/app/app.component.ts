@@ -6,8 +6,7 @@ import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {Metronome} from '../../lib/metronome';
 import {AudioListener} from '../../domain/listeners/audioListener';
 import {SchedulerComponent} from '../scheduler/scheduler.component';
-import {FormControl} from '@angular/forms';
-import {GlobalControlsComponent} from "../global-controls/global-controls/global-controls.component";
+import {GlobalControlsComponent} from '../global-controls/global-controls.component';
 
 @Component({
   selector: 'app-root',

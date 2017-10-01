@@ -7,9 +7,8 @@ import {SchedulerComponent} from './components/scheduler/scheduler.component';
 import {MetronomeComponent} from './components/metronome/metronome.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {JsonPipe} from "@angular/common";
-import { GlobalControlsComponent } from './components/global-controls/global-controls/global-controls.component';
-import { SchedulerItemComponent } from './components/scheduler/scheduler-item/scheduler-item/scheduler-item.component';
+import { GlobalControlsComponent } from './components/global-controls/global-controls.component';
+import { SchedulerItemComponent } from './components/scheduler/scheduler-item/scheduler-item.component';
 
 @NgModule({
   declarations: [
