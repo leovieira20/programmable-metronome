@@ -11,6 +11,7 @@ import { GlobalControlsComponent } from './components/global-controls/global-con
 import { SchedulerItemComponent } from './components/scheduler/scheduler-item/scheduler-item.component';
 import { SchedulerItemListComponent } from './components/scheduler/scheduler-item-list/scheduler-item-list.component';
 import { SchedulerItemFormComponent } from './components/scheduler/scheduler-item-form/scheduler-item-form-component.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SchedulerItemFormComponent } from './components/scheduler/scheduler-ite
     GlobalControlsComponent,
     SchedulerItemComponent,
     SchedulerItemListComponent,
-    SchedulerItemFormComponent
+    SchedulerItemFormComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
