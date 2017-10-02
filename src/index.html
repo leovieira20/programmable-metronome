@@ -10,10 +10,26 @@
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <script src="http://cwilso.github.io/AudioContext-MonkeyPatch/AudioContextMonkeyPatch.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase-messaging.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyA4kieTGaH-ZBT-h37_Vgn6RXQg0PObVLU",
+      authDomain: "programmable-metronome.firebaseapp.com",
+      databaseURL: "https://programmable-metronome.firebaseio.com",
+      projectId: "programmable-metronome",
+      messagingSenderId: "839777109478"
+    };
+    firebase.initializeApp(config);
+  </script>
 </head>
 <body>
-  <app-root></app-root>
+
+<app-root></app-root>
+
 </body>
 </html>
