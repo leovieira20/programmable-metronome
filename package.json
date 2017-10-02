@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
+    "start-dev": "ng serve",
     "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
@@ -31,7 +32,7 @@
     "angular2-hotkeys": "^2.0.1",
     "angular2-materialize": "^15.1.9"
   },
-  "devDependencies": {       
+  "devDependencies": {
     "@angular/language-service": "^4.2.4",
     "@types/jasmine": "~2.5.53",
     "@types/jasminewd2": "~2.0.2",
