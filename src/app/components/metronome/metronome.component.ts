@@ -3,6 +3,7 @@ import {Metronome} from '../../lib/metronome';
 import ResolutionOptions from '../../domain/entities/resolutionOptions';
 import {IStepProvider} from '../../domain/entities/IStepProvider';
 import {Programme} from '../../domain/entities/programme';
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'metronome',
@@ -14,11 +15,10 @@ export class MetronomeComponent implements OnInit, IStepProvider {
   private _stepSetup: Programme;
 
   public tempo: number;
-  public isPlaying: boolean;
   public selectedResolutionId: number;
   public resolutionOptions = ResolutionOptions;
   public tempoChange = new EventEmitter();
-  public isPlayingChange = new EventEmitter();
+  public isPlayingStatus: Observable<boolean>;
 
   constructor(private metronome: Metronome) {
   }
@@ -26,10 +26,7 @@ export class MetronomeComponent implements OnInit, IStepProvider {
   ngOnInit(): void {
     this.tempo = this.metronome.tempo;
     this.selectedResolutionId = this.resolutionOptions[0].id;
-    this.metronome.isPlayingStatus.subscribe(x => {
-      this.isPlaying = x;
-      this.isPlayingChange.next(x);
-    });
+    this.isPlayingStatus = this.metronome.isPlayingStatus;
   }
 
   toggleState(isMetronomeActive: boolean) {

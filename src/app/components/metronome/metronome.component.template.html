@@ -23,6 +23,6 @@
         </div>
     </div>
     <div class="card-action">
-      <a class="waves-effect waves-light btn-large" (click)="togglePlaying()">{{isPlaying ? "stop" : "start"}}</a>
+      <a class="waves-effect waves-light btn-large" (click)="togglePlaying()">{{(isPlayingStatus | async) ? "stop" : "start"}}</a>
     </div>
 </div>
