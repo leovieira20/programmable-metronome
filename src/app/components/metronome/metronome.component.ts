@@ -3,10 +3,10 @@ import {Metronome} from '../../lib/metronome';
 import ResolutionOptions from '../../domain/entities/resolutionOptions';
 import {IStepProvider} from '../../domain/entities/IStepProvider';
 import {Programme} from '../../domain/entities/programme';
-import {Observable} from "rxjs/Observable";
+import {Observable} from 'rxjs/Observable';
 
 @Component({
-  selector: 'metronome',
+  selector: 'app-metronome',
   templateUrl: './metronome.component.template.html',
 })
 export class MetronomeComponent implements OnInit, IStepProvider {
