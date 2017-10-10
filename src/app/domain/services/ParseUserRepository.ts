@@ -11,6 +11,10 @@ export class ParseUserRepository implements IUserRepository {
     this.user.next(Parse.User.current());
   }
 
+  getCurrentUser(): any {
+    return Parse.User.current();
+  }
+
   setCurrentUser(user: any) {
     this.user.next(user);
   }

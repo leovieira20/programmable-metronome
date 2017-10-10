@@ -4,14 +4,14 @@
   <div class="divider"></div>
 
   <div class="row">
-    <scheduler-item-form (onStepCreated)="addStep($event)"></scheduler-item-form>
+    <app-scheduler-item-form (onStepCreated)="addStep($event)"></app-scheduler-item-form>
   </div>
 
   <div class="section">
-    <h5>Programme List</h5>
+    <h5>Steps</h5>
   </div>
 
   <div class="row" *ngIf="stepList.length > 0">
-    <scheduler-item-list [stepList]="stepList"></scheduler-item-list>
+    <app-scheduler-item-list [stepList]="stepList"></app-scheduler-item-list>
   </div>
 </div>

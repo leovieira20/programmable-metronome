@@ -1,16 +1,17 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import ResolutionOptions from '../../../domain/entities/resolutionOptions';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Programme} from '../../../domain/entities/programme';
+import {Setup} from '../../../domain/entities/Setup';
+import {Step} from "../../../domain/entities/Step";
 
 @Component({
-  selector: 'scheduler-item-form',
+  selector: 'app-scheduler-item-form',
   templateUrl: './scheduler-item-form-component.html'
 })
 export class SchedulerItemFormComponent implements OnInit {
   stepForm: FormGroup;
   resolutionOptions = ResolutionOptions;
-  @Output() onStepCreated = new EventEmitter<Programme>();
+  @Output() onStepCreated = new EventEmitter<Step>();
 
   constructor(private fb: FormBuilder) {
   }
@@ -22,9 +23,13 @@ export class SchedulerItemFormComponent implements OnInit {
   public addStep() {
     const stepForm = this.stepForm.value;
     const resolution = this.resolutionOptions.find(x => x.id === Number(stepForm.resolution));
-    const p = new Programme(stepForm.tempo, resolution, stepForm.beats);
 
-    this.onStepCreated.emit(p);
+    const step = new Step();
+    step.tempo = stepForm.tempo;
+    step.resolution = resolution;
+    step.beats = stepForm.beats;
+
+    this.onStepCreated.emit(step);
   }
 
   private createFormModel() {

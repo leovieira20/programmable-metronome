@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Metronome} from '../../lib/metronome';
 import ResolutionOptions from '../../domain/entities/resolutionOptions';
 import {IStepProvider} from '../../domain/entities/IStepProvider';
-import {Programme} from '../../domain/entities/programme';
+import {Setup} from '../../domain/entities/Setup';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
@@ -12,7 +12,7 @@ import {Observable} from 'rxjs/Observable';
 export class MetronomeComponent implements OnInit, IStepProvider {
   private _tempoAmount = 5;
   private _isActive = false;
-  private _stepSetup: Programme;
+  private _stepSetup: Setup;
 
   public tempo: number;
   public selectedResolutionId: number;
@@ -55,12 +55,12 @@ export class MetronomeComponent implements OnInit, IStepProvider {
     this.changeTempoValue(-this._tempoAmount);
   }
 
-  getNextStep(): Programme {
+  getNextStep(): Setup {
     if (this._stepSetup === undefined) {
-      this._stepSetup = new Programme(this.tempo, this.resolutionOptions.find(x => x.id === this.selectedResolutionId), 1);
+      this._stepSetup = new Setup(this.tempo, this.resolutionOptions.find(x => x.id === this.selectedResolutionId), 1);
     }
 
-    return this._stepSetup.getNextStep();
+    return this._stepSetup.getNextSetup();
   }
 
   private changeTempoValue(tempoAmount: number) {
