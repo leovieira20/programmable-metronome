@@ -12,9 +12,6 @@ import { SchedulerItemComponent } from './components/scheduler/scheduler-item/sc
 import { SchedulerItemListComponent } from './components/scheduler/scheduler-item-list/scheduler-item-list.component';
 import { SchedulerItemFormComponent } from './components/scheduler/scheduler-item-form/scheduler-item-form-component.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import {AngularFireModule} from 'angularfire2';
-import {FirebaseConfig} from './domain/config/FirebaseConfig';
-import {AngularFireAuthModule} from 'angularfire2/auth';
 
 @NgModule({
   declarations: [
@@ -33,9 +30,7 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
     HttpClientModule,
     MaterializeModule,
     FormsModule,
-    ReactiveFormsModule,
-    AngularFireModule.initializeApp(FirebaseConfig),
-    AngularFireAuthModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

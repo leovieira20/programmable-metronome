@@ -7,6 +7,9 @@ import {Metronome} from '../../lib/metronome';
 import {AudioListener} from '../../domain/listeners/audioListener';
 import {SchedulerComponent} from '../scheduler/scheduler.component';
 import {GlobalControlsComponent} from '../global-controls/global-controls.component';
+import {environment} from '../../../environments/environment';
+
+const parse = require('parse');
 
 @Component({
   selector: 'app-root',
@@ -30,6 +33,16 @@ export class AppComponent implements OnInit {
               private audioService: AudioContextService,
               private bus: Bus,
               audioListener: AudioListener) {
+
+    parse.initialize(environment.parseAppId);
+    parse.serverURL = environment.parseUrl;
+
+    parse.FacebookUtils.init({
+      appId      : environment.facebookAppId,
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.3'
+    });
   }
 
   ngOnInit(): void {

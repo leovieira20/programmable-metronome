@@ -3,7 +3,7 @@
     <a href="#" class="brand-logo">Programmable Metronome</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li>
-        <div *ngIf="(user | async) != null; then loggedUserBlock else unloggedUserBlock"></div>
+        <div *ngIf="user; then loggedUserBlock else unloggedUserBlock"></div>
         <ng-template #unloggedUserBlock>
           <a class="waves-effect waves-light btn" (click)="login()">Login</a>
         </ng-template>
