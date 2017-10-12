@@ -3,9 +3,12 @@ import {IProgramRepository} from './IProgramRepository';
 import {Program} from '../entities/Program';
 import * as Parse from 'parse';
 import {Observable} from 'rxjs/Observable';
+import ResolutionOptions from '../entities/resolutionOptions';
+import {Step} from "../entities/Step";
 
 @Injectable()
 export class ParseProgramRepository implements IProgramRepository {
+  private currentProgram: Program;
   private ClassName = 'Program';
 
   constructor() {
@@ -46,10 +49,17 @@ export class ParseProgramRepository implements IProgramRepository {
       query.find({
         success: results => {
           observer.next(results.map(x => {
-            return {
-              name: x.get('name'),
-              steps: x.get('steps')
-            };
+            const steps = [];
+
+            for (let s of x.get('steps')) {
+              steps.push(this.parseToDomainStep(s));
+            }
+
+            const p = new Program();
+            p.name = x.get('name');
+            p.steps = steps;
+
+            return p;
           }));
           observer.complete();
         },
@@ -58,5 +68,22 @@ export class ParseProgramRepository implements IProgramRepository {
         }
       });
     });
+  }
+
+  getCurrentProgram(): Program {
+    return this.currentProgram;
+  }
+
+  setCurrentProgram(p: Program) {
+    this.currentProgram = p;
+  }
+
+  private parseToDomainStep(s: any): Step {
+    const step = new Step();
+    step.tempo = s.tempo;
+    step.beats = s.beats;
+    step.resolution = ResolutionOptions.find(r => r.id === s.resolutionId);
+
+    return step;
   }
 }

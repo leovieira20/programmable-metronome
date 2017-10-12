@@ -15,7 +15,7 @@
     <button class="waves-effect waves-light btn" (click)="loadProgram()">Load Program</button>
   </div>
 
-  <div class="row" *ngIf="stepList.length > 0">
-    <app-scheduler-item-list [stepList]="stepList"></app-scheduler-item-list>
+  <div class="row" *ngIf="program.steps.length > 0">
+    <app-scheduler-item-list [program]="program"></app-scheduler-item-list>
   </div>
 </div>

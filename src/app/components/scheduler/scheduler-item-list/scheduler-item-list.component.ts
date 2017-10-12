@@ -3,13 +3,14 @@ import {IProgramRepository} from '../../../domain/services/IProgramRepository';
 import {Step} from '../../../domain/entities/Step';
 import {IUserRepository} from '../../../domain/services/IUserRepository';
 import {MaterializeAction} from 'angular2-materialize';
+import {Program} from '../../../domain/entities/Program';
 
 @Component({
   selector: 'app-scheduler-item-list',
   templateUrl: './scheduler-item-list.component.html'
 })
 export class SchedulerItemListComponent {
-  @Input() stepList: Array<Step>;
+  @Input() program: Program;
   programName: string;
   isBusy: boolean;
   toastActions = new EventEmitter<string | MaterializeAction>();
@@ -26,7 +27,7 @@ export class SchedulerItemListComponent {
   }
 
   removeStep(s: Step) {
-    this.stepList.splice(this.stepList.indexOf(s), 1);
+    this.program.steps.splice(this.program.steps.indexOf(s), 1);
   }
 
   showPleaseLogInToast() {
@@ -36,10 +37,10 @@ export class SchedulerItemListComponent {
   private save() {
     this.isBusy = true;
     this.programRepository.save({
-      name: this.programName,
-      steps: this.stepList
+      name: this.program.name,
+      steps: this.program.steps
     }, this.userRepository.getCurrentUser()).subscribe(null, error => this.isBusy = false, () => {
-      this.programName = '';
+      this.program.name = '';
       this.isBusy = false;
     });
   }

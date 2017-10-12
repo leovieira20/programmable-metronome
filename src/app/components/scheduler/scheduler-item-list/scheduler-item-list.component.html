@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col s9">
-    <input type="text" [(ngModel)]="programName">
+    <input type="text" [(ngModel)]="program.name">
   </div>
   <div class="col s3">
-    <button class="waves-effect waves-light btn" (click)="saveProgram()" [disabled]="isBusy || !programName">Save
+    <button class="waves-effect waves-light btn" (click)="saveProgram()" [disabled]="isBusy || !program.name">Save
       Program
     </button>
   </div>
@@ -11,7 +11,7 @@
 
 <div class="row">
   <ul class="collection">
-    <li *ngFor="let s of stepList" class="collection-item" [ngClass]="{'active' : s.isActive}">
+    <li *ngFor="let s of program.steps" class="collection-item" [ngClass]="{'active' : s.isActive}">
       <app-scheduler-item [step]="s" (onStepRemoved)="removeStep($event)"></app-scheduler-item>
     </li>
   </ul>
