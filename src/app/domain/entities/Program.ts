@@ -1,6 +1,5 @@
-import {Step} from './Step';
-
 export class Program {
+  id: string;
   name: string;
-  steps = new Array<Step>();
+  steps = [];
 }

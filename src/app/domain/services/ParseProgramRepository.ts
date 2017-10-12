@@ -56,6 +56,7 @@ export class ParseProgramRepository implements IProgramRepository {
             }
 
             const p = new Program();
+            p.id = x.id;
             p.name = x.get('name');
             p.steps = steps;
 
@@ -76,6 +77,13 @@ export class ParseProgramRepository implements IProgramRepository {
 
   setCurrentProgram(p: Program) {
     this.currentProgram = p;
+  }
+
+  delete(p: Program): Observable<any> {
+    const query = new Parse.Query(this.ClassName);
+
+    return Observable.fromPromise(query.get(p.id))
+      .flatMap(x => Observable.fromPromise(x.destroy()));
   }
 
   private parseToDomainStep(s: any): Step {

@@ -26,7 +26,10 @@ export class MyProgramsComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  removeProgram() {
-
+  removeProgram(ix: number) {
+    this.programRepository.delete(this.programs[ix])
+      .subscribe(x => {
+        this.programs.splice(ix, 1);
+      });
   }
 }

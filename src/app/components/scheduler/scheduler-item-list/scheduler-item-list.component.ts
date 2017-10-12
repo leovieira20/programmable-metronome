@@ -11,7 +11,6 @@ import {Program} from '../../../domain/entities/Program';
 })
 export class SchedulerItemListComponent {
   @Input() program: Program;
-  programName: string;
   isBusy: boolean;
   toastActions = new EventEmitter<string | MaterializeAction>();
 
@@ -36,10 +35,7 @@ export class SchedulerItemListComponent {
 
   private save() {
     this.isBusy = true;
-    this.programRepository.save({
-      name: this.program.name,
-      steps: this.program.steps
-    }, this.userRepository.getCurrentUser()).subscribe(null, error => this.isBusy = false, () => {
+    this.programRepository.save(this.program, this.userRepository.getCurrentUser()).subscribe(null, error => this.isBusy = false, () => {
       this.program.name = '';
       this.isBusy = false;
     });

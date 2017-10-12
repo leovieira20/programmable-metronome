@@ -9,4 +9,6 @@ export abstract class IProgramRepository {
   abstract setCurrentProgram(p: Program);
 
   abstract getCurrentProgram(): Program;
+
+  abstract delete(p: Program): Observable<any>;
 }
