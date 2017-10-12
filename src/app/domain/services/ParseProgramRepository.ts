@@ -2,17 +2,18 @@ import {Injectable} from '@angular/core';
 import {IProgramRepository} from './IProgramRepository';
 import {Program} from '../entities/Program';
 import * as Parse from 'parse';
-import {IUserRepository} from './IUserRepository';
 import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ParseProgramRepository implements IProgramRepository {
-  constructor(private userRepository: IUserRepository) {
+  private ClassName = 'Program';
+
+  constructor() {
   }
 
-  save(program: Program): Observable<boolean> {
+  save(program: Program, currentUser: any): Observable<boolean> {
     return Observable.create(observer => {
-      const ParseProgram = Parse.Object.extend('Program');
+      const ParseProgram = Parse.Object.extend(this.ClassName);
       const p = new ParseProgram();
 
       p.save({
@@ -24,7 +25,7 @@ export class ParseProgramRepository implements IProgramRepository {
             beats: x.beats
           };
         }),
-        owner: this.userRepository.getCurrentUser()
+        owner: currentUser
       }, {
         success: x => {
           observer.next(true);
@@ -32,6 +33,28 @@ export class ParseProgramRepository implements IProgramRepository {
         },
         error: (x, error) => {
           observer.next(false);
+        }
+      });
+    });
+  }
+
+  fetchMyPrograms(currentUser: any): Observable<[Program]> {
+    return Observable.create(observer => {
+      const query = new Parse.Query(this.ClassName);
+      query.equalTo('owner', currentUser);
+
+      query.find({
+        success: results => {
+          observer.next(results.map(x => {
+            return {
+              name: x.get('name'),
+              steps: x.get('steps')
+            };
+          }));
+          observer.complete();
+        },
+        error: error => {
+          observer.error(error);
         }
       });
     });

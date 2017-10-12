@@ -11,6 +11,10 @@
     <h5>Steps</h5>
   </div>
 
+  <div class="row">
+    <button class="waves-effect waves-light btn" (click)="loadProgram()">Load Program</button>
+  </div>
+
   <div class="row" *ngIf="stepList.length > 0">
     <app-scheduler-item-list [stepList]="stepList"></app-scheduler-item-list>
   </div>

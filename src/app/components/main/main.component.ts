@@ -8,18 +8,15 @@ import {AudioListener} from '../../domain/listeners/audioListener';
 import {SchedulerComponent} from '../scheduler/scheduler.component';
 import {GlobalControlsComponent} from '../global-controls/global-controls.component';
 import {environment} from '../../../environments/environment';
-import {ParseUserRepository} from '../../domain/services/ParseUserRepository';
-import {IUserRepository} from '../../domain/services/IUserRepository';
 
 const parse = require('parse');
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  providers: [Bus, Metronome, AudioContextService, AudioListener,
-    {provide: IUserRepository, useClass: ParseUserRepository}]
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  providers: [Bus, Metronome, AudioContextService, AudioListener]
 })
-export class AppComponent implements OnInit {
+export class MainComponent implements OnInit {
   @ViewChild(MetronomeComponent)
   private metronomeComponent: MetronomeComponent;
   @ViewChild(SchedulerComponent)

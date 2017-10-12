@@ -1,0 +1,11 @@
+<div class="col s12">
+  <ul class="collection">
+    <li *ngFor="let p of programs" class="collection-item">
+      <div>Name: {{p.name}}
+        <a href="#" class="secondary-content" (click)="removeProgram(p)">
+          <i class="material-icons">delete</i>
+        </a>
+      </div>
+    </li>
+  </ul>
+</div>
