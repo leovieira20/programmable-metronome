@@ -1,12 +1,12 @@
 <form [formGroup]="stepForm" novalidate>
-  <div class="col s3">
+  <div class="col s12 m3">
     <div class="input-field inline">
       <input type="number" [ngClass]="{'invalid': stepForm.get('tempo').invalid}" formControlName="tempo">
       <label>Tempo</label>
     </div>
   </div>
 
-  <div class="col s3">
+  <div class="col s12 m4">
     <div class="input-field inline">
       <select #resolutionSelect formControlName="resolution" materialize="material_select">
         <option value="" disabled selected>Resolution</option>
@@ -15,14 +15,14 @@
     </div>
   </div>
 
-  <div class="col s3">
+  <div class="col s12 m3">
     <div class="input-field inline">
       <input type="number" class="validate" [ngClass]="{'invalid': stepForm.get('beats').invalid}" formControlName="beats">
       <label>Beats</label>
     </div>
   </div>
 
-  <div class="col s3">
+  <div class="col s12 m2">
     <div class="input-field inline">
       <button class="waves-effect waves-light btn" (click)="addStep()" [disabled]="stepForm.invalid">Add</button>
     </div>
