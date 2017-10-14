@@ -18,7 +18,7 @@ var api = new ParseServer({
   databaseURI: process.env.DB_URL,
   cloud: 'cloud-functions/main.js',
   appId: process.env.APP_ID,
-  masterKey: process.env.DB_URL.MASTER_KEY,
+  masterKey: process.env.MASTER_KEY,
   serverURL: 'https://pgmb-metronome.herokuapp.com/parse'
 });
 
