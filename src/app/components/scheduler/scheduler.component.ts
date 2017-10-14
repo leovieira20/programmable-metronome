@@ -5,6 +5,7 @@ import {Step} from '../../domain/entities/Step';
 import {Router} from '@angular/router';
 import {IProgramRepository} from '../../domain/services/IProgramRepository';
 import {Program} from '../../domain/entities/Program';
+import {Setup} from "../../domain/entities/Setup";
 
 @Component({
   selector: 'app-scheduler',
@@ -40,35 +41,7 @@ export class SchedulerComponent implements IStepProvider, OnInit {
     this.router.navigate(['my-programs']);
   }
 
-  public getNextStep() {
-    if (this.program.steps.length === 0) {
-      return null;
-    }
-
-    let activeStep = this.program.steps.find(x => x.isActive);
-    if (!activeStep) {
-      this.program.steps[0].isActive = true;
-      activeStep = this.program.steps[0];
-
-      return activeStep.getNextSetup();
-    }
-
-    if (activeStep.hasNextSetup()) {
-      return activeStep.getNextSetup();
-    } else {
-      if (this.program.steps.length > 1) {
-        activeStep.isActive = false;
-        if (this.program.steps.indexOf(activeStep) === (this.program.steps.length - 1)) {
-          activeStep = this.program.steps[0];
-          activeStep.isActive = true;
-        } else {
-          const nextIndex = this.program.steps.indexOf(activeStep) + 1;
-          activeStep = this.program.steps[nextIndex];
-          activeStep.isActive = true;
-        }
-      }
-
-      return activeStep.getNextSetup();
-    }
+  public getNextStep(): Setup {
+    return this.program.getCurrentSetup();
   }
 }
