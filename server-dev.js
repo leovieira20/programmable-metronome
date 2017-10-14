@@ -3,11 +3,11 @@ var ParseServer = require('parse-server').ParseServer;
 var app = express();
 
 var api = new ParseServer({
-  databaseURI: 'mongodb://localhost:27017/dev',
   cloud: 'cloud-functions/main.js',
-  appId: 'appId',
-  masterKey: 'masterKey',
-  serverURL: 'http://localhost:1337/parse'
+  databaseURI: process.ev.DB_URL,
+  appId: process.env.APP_ID,
+  masterKey: process.env.MASTER_KEY,
+  serverURL: process.env.SERVER_URL
 });
 
 app.use('/parse', api);
