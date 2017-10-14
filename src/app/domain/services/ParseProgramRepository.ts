@@ -21,14 +21,15 @@ export class ParseProgramRepository implements IProgramRepository {
 
       p.save({
         name: program.name,
+        tempoModifier: program.tempoModifier,
+        owner: currentUser,
         steps: program.steps.map(x => {
           return {
             tempo: x.tempo,
             resolutionId: x.resolution.id,
             beats: x.beats
           };
-        }),
-        owner: currentUser
+        })
       }, {
         success: x => {
           observer.next(true);
@@ -51,13 +52,14 @@ export class ParseProgramRepository implements IProgramRepository {
           observer.next(results.map(x => {
             const steps = [];
 
-            for (let s of x.get('steps')) {
+            for (const s of x.get('steps')) {
               steps.push(this.parseToDomainStep(s));
             }
 
             const p = new Program();
             p.id = x.id;
             p.name = x.get('name');
+            p.tempoModifier = x.get('tempoModifier');
             p.steps = steps;
 
             return p;

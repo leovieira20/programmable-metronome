@@ -36,22 +36,22 @@ export class MetronomeComponent implements OnInit, IStepProvider {
     }
   }
 
-  public togglePlaying(): void {
+  togglePlaying(): void {
     this.metronome.togglePlay();
   }
 
-  public changeResolution(resolutionId: number) {
+  changeResolution(resolutionId: number) {
     const resolution = this.resolutionOptions.find(x => x.id === Number(resolutionId));
     this.selectedResolutionId = resolutionId;
 
     this._stepSetup.noteResolution = resolution;
   }
 
-  public increaseTempo() {
+  increaseTempo() {
     this.changeTempoValue(this._tempoAmount);
   }
 
-  public decreaseTempo() {
+  decreaseTempo() {
     this.changeTempoValue(-this._tempoAmount);
   }
 

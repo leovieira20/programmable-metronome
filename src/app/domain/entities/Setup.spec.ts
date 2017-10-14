@@ -53,5 +53,13 @@ describe('Setup tests', () => {
         expect(result).toBe(0.1005);
       });
     });
+
+    it('When tempo modifier is on, Then tempo should reflect', () => {
+      const sut = new Setup(TEMPO, quarterNoteResolution);
+
+      const result = sut.getStepInMS();
+
+      expect(result).toBe(0.3);
+    });
   });
 });

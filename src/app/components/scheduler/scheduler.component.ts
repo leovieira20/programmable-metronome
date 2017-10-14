@@ -16,6 +16,13 @@ import {IUserRepository} from "../../domain/services/IUserRepository";
       <h2>Scheduler</h2>
 
       <div class="row">
+        <div class="input-field col s12">
+          <input type="number" [(ngModel)]="program.tempoModifier">
+          <label>Global Tempo Modifier (%)</label>
+        </div>
+      </div>
+
+      <div class="row">
         <app-scheduler-item-form (onStepCreated)="addStep($event)"></app-scheduler-item-form>
       </div>
 
@@ -63,7 +70,7 @@ export class SchedulerComponent implements IStepProvider, OnInit {
   }
 
   addStep(s: Step) {
-    this.program.steps.push(s);
+    this.program.addStep(s);
   }
 
   loadProgram() {
@@ -93,9 +100,10 @@ export class SchedulerComponent implements IStepProvider, OnInit {
 
   private save() {
     this.isBusy = true;
-    this.programRepository.save(this.program, this.userRepository.getCurrentUser()).subscribe(null, error => this.isBusy = false, () => {
-      this.program.name = '';
-      this.isBusy = false;
-    });
+    this.programRepository.save(this.program, this.userRepository.getCurrentUser())
+      .subscribe(null, error => this.isBusy = false, () => {
+        this.program.name = '';
+        this.isBusy = false;
+      });
   }
 }

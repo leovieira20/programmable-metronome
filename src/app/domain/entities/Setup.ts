@@ -3,6 +3,7 @@ import {AccentType} from './accentType';
 
 export class Setup {
   private steps: Array<Setup> = [];
+  private tempoModifier: number;
 
   accentType: AccentType;
 
@@ -12,12 +13,14 @@ export class Setup {
     this.beats = beats || 1;
   }
 
-  getNextSetup(): Setup {
+  getNextSetup(tempoModifier: number = 1): Setup {
     if (this.steps.length === 0) {
       this.steps = this.makeSetups();
     }
 
-    return this.steps.shift();
+    const setup = this.steps.shift();
+    setup.tempoModifier = tempoModifier;
+    return setup;
   }
 
   hasNextSetup(): boolean {
@@ -27,7 +30,7 @@ export class Setup {
   getStepInMS(): number {
     const noteResolution = this.noteResolution;
     const millisecondsPerBeat = 60 / this.tempo;
-    return (millisecondsPerBeat * noteResolution.duration) * (noteResolution.isTriplet ? 0.67 : 1);
+    return (millisecondsPerBeat * noteResolution.duration) * (noteResolution.isTriplet ? 0.67 : 1) / this.tempoModifier;
   }
 
   private getNumberOfSteps(): number {
