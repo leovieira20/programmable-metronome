@@ -4,5 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  facebookAppId: '1912458242407694',
+  parseAppId: 'appId',
+  parseUrl: 'http://localhost:1337/parse'
 };
