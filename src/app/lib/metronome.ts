@@ -77,8 +77,6 @@ export class Metronome {
   }
 
   private calculateNextNote(programme: Setup) {
-    const noteResolution = programme.noteResolution;
-    const millisecondsPerBeat = 60 / programme.tempo;
-    this.nextNoteTime += (millisecondsPerBeat * noteResolution.duration) * (noteResolution.isTriplet ? 0.67 : 1);
+    this.nextNoteTime += programme.getStepInMS();
   }
 }

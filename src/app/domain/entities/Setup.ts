@@ -8,7 +8,8 @@ export class Setup {
 
   constructor(public tempo: number,
               public noteResolution: NoteResolution,
-              public beats: number) {
+              public beats?: number) {
+    this.beats = beats || 1;
   }
 
   getNextSetup(): Setup {
@@ -21,6 +22,12 @@ export class Setup {
 
   hasNextSetup(): boolean {
     return this.steps.length !== 0;
+  }
+
+  getStepInMS(): number {
+    const noteResolution = this.noteResolution;
+    const millisecondsPerBeat = 60 / this.tempo;
+    return (millisecondsPerBeat * noteResolution.duration) * (noteResolution.isTriplet ? 0.67 : 1);
   }
 
   private getNumberOfSteps(): number {
