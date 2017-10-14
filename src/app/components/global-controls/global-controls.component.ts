@@ -3,8 +3,29 @@ import {FormControl} from '@angular/forms';
 import {Bus} from '../../domain/entities/Bus';
 
 @Component({
-  selector: 'global-controls',
-  templateUrl: './global-controls.component.html'
+  selector: 'app-global-controls',
+  template: `
+    <div class="col s3">
+      <div class="switch">
+        <label>
+          Scheduler
+          <input type="checkbox" [formControl]="schedulerMode">
+          <span class="lever"></span>
+          Metronome
+        </label>
+      </div>
+
+    </div>
+
+    <div class="col s9">
+      <label>Gain:</label>
+      <div class="input-field">
+        <p class="range-field">
+          <input type="range" min="0.0" max="100.0" step="{{gainAmount}}" [(ngModel)]="gain">
+        </p>
+      </div>
+    </div>
+  `
 })
 export class GlobalControlsComponent implements OnInit {
   public gainAmount = 5;

@@ -13,8 +13,23 @@ const parse = require('parse');
 
 @Component({
   selector: 'app-main',
-  templateUrl: './main.component.html',
-  providers: [Bus, Metronome, AudioContextService, AudioListener]
+  providers: [Bus, Metronome, AudioContextService, AudioListener],
+  template: `
+    <app-nav-bar></app-nav-bar>
+    <div class="row">
+      <app-global-controls (onToggleScheduler)="toggleScheduler($event)"></app-global-controls>
+    </div>
+    <div class="row">
+      <div class="col s12 m7">
+        <app-scheduler></app-scheduler>
+      </div>
+      <div class="col s12 m5">
+        <app-metronome></app-metronome>
+      </div>
+    </div>
+
+    <hotkeys-cheatsheet></hotkeys-cheatsheet>
+  `
 })
 export class MainComponent implements OnInit {
   @ViewChild(MetronomeComponent)

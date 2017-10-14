@@ -7,7 +7,28 @@ import {Program} from '../../../domain/entities/Program';
 
 @Component({
   selector: 'app-scheduler-item-list',
-  templateUrl: './scheduler-item-list.component.html'
+  template: `
+    <div class="row">
+      <div class="col s9">
+        <input type="text" [(ngModel)]="program.name">
+      </div>
+      <div class="col s3">
+        <button class="waves-effect waves-light btn" (click)="saveProgram()" [disabled]="isBusy || !program.name">Save
+          Program
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <ul class="collection">
+        <li *ngFor="let s of program.steps" class="collection-item" [class.active]="s.isActive">
+          <app-scheduler-item [step]="s" (onStepRemoved)="removeStep($event)"></app-scheduler-item>
+        </li>
+      </ul>
+    </div>
+
+    <div materialize [materializeParams]="['You need to login to save the program',3000]" [materializeActions]="toastActions"></div>
+  `
 })
 export class SchedulerItemListComponent {
   @Input() program: Program;
