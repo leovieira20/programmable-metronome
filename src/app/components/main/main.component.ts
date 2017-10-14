@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Bus} from '../../lib/Bus';
-import {AudioContextService} from '../../lib/AudioContextService';
+import {Bus} from '../../domain/entities/Bus';
+import {AudioContextService} from '../../domain/entities/AudioContextService';
 import {MetronomeComponent} from '../metronome/metronome.component';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
-import {Metronome} from '../../lib/metronome';
+import {Metronome} from '../../domain/entities/metronome';
 import {AudioListener} from '../../domain/listeners/audioListener';
 import {SchedulerComponent} from '../scheduler/scheduler.component';
 import {GlobalControlsComponent} from '../global-controls/global-controls.component';

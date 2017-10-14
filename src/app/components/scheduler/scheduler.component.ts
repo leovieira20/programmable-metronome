@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Metronome} from '../../lib/metronome';
+import {Metronome} from '../../domain/entities/metronome';
 import {IStepProvider} from '../../domain/entities/IStepProvider';
 import {Step} from '../../domain/entities/Step';
 import {Router} from '@angular/router';
