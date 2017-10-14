@@ -57,7 +57,7 @@ export class MetronomeComponent implements OnInit, IStepProvider {
 
   getNextStep(): Setup {
     if (this._stepSetup === undefined) {
-      this._stepSetup = new Setup(this.tempo, this.resolutionOptions.find(x => x.id === this.selectedResolutionId), 1);
+      this._stepSetup = new Setup(this.tempo, this.resolutionOptions.find(x => x.id === this.selectedResolutionId), 1, false);
     }
 
     return this._stepSetup.getNextSetup();

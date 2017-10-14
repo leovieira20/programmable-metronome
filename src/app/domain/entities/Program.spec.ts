@@ -52,10 +52,7 @@ describe('Program tests', () => {
   });
 
   function makeStep() {
-    const s = new Step();
-    s.tempo = 1;
-    s.resolution = ResolutionOptions[0];
-    s.beats = 1;
+    const s = new Step(1, 1, ResolutionOptions[0]);
     return s;
   }
 });

@@ -4,16 +4,18 @@ import {Setup} from './Setup';
 export class Step {
   private _setup: Setup;
 
-  tempo: number;
-  beats: number;
   isActive: boolean;
   resolutionId: string;
   tempoModifier: number;
-  resolution: NoteResolution;
+
+  constructor(public tempo: number,
+              public beats: number,
+              public resolution: NoteResolution,
+              public tempoLock: boolean = false) {
+    this.createSetup();
+  }
 
   getNextSetup(tempoModifier: number): Setup {
-    this.createSetupIfNotExists();
-
     return this._setup.getNextSetup(tempoModifier);
   }
 
@@ -21,9 +23,12 @@ export class Step {
     return this._setup.hasNextSetup();
   }
 
-  private createSetupIfNotExists() {
-    if (!this._setup) {
-      this._setup = new Setup(this.tempo, this.resolution, this.beats);
-    }
+  toggleTempoLock() {
+    this.tempoLock = !this.tempoLock;
+    this._setup.toggleTempoLock();
+  }
+
+  private createSetup() {
+    this._setup = new Setup(this.tempo, this.resolution, this.beats, this.tempoLock);
   }
 }

@@ -9,8 +9,10 @@ export class Setup {
 
   constructor(public tempo: number,
               public noteResolution: NoteResolution,
-              public beats?: number) {
+              public beats?: number,
+              public tempoLock?: boolean) {
     this.beats = beats || 1;
+    this.tempoLock = tempoLock || false;
   }
 
   getNextSetup(tempoModifier: number = 1): Setup {
@@ -30,7 +32,12 @@ export class Setup {
   getStepInMS(): number {
     const noteResolution = this.noteResolution;
     const millisecondsPerBeat = 60 / this.tempo;
-    return (millisecondsPerBeat * noteResolution.duration) * (noteResolution.isTriplet ? 0.67 : 1) / this.tempoModifier;
+    const tripletCalculation = (millisecondsPerBeat * noteResolution.duration) * (noteResolution.isTriplet ? 0.67 : 1);
+    return this.tempoLock ? tripletCalculation : tripletCalculation / this.tempoModifier;
+  }
+
+  toggleTempoLock() {
+    this.tempoLock = !this.tempoLock;
   }
 
   private getNumberOfSteps(): number {
@@ -41,7 +48,7 @@ export class Setup {
     const steps = [];
     for (let i = 0; i < this.getNumberOfSteps(); i++) {
       const accentType = i % this.noteResolution.beatMultiplier === 0 ? AccentType.BEAT_HEAD : AccentType.SUB_BEAT;
-      const p = new Setup(this.tempo, this.noteResolution, this.beats);
+      const p = new Setup(this.tempo, this.noteResolution, this.beats, this.tempoLock);
       p.accentType = accentType;
 
       steps.push(p);

@@ -24,10 +24,7 @@ export class SchedulerItemFormComponent implements OnInit {
     const stepForm = this.stepForm.value;
     const resolution = this.resolutionOptions.find(x => x.id === Number(stepForm.resolution));
 
-    const step = new Step();
-    step.tempo = stepForm.tempo;
-    step.resolution = resolution;
-    step.beats = stepForm.beats;
+    const step = new Step(stepForm.tempo, stepForm.beats, resolution);
 
     this.onStepCreated.emit(step);
   }

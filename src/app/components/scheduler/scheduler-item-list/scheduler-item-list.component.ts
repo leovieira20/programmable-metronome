@@ -19,7 +19,10 @@ import {Program} from '../../../domain/entities/Program';
     <div class="row">
       <ul class="collection">
         <li *ngFor="let s of program.steps" class="collection-item" [class.active]="s.isActive">
-          <app-scheduler-item [step]="s" (onStepRemoved)="removeStep($event)"></app-scheduler-item>
+          <app-scheduler-item
+            [step]="s"
+            (onStepRemoved)="removeStep($event)">
+          </app-scheduler-item>
         </li>
       </ul>
     </div>

@@ -12,7 +12,7 @@ describe('Setup tests', () => {
   describe('Given getStepInMS is being tested', () => {
     describe('When a non triplet resolution is chosen', () => {
       it('And is a quarter not, And tempo is 100 bpm, Then result should be 0.6 ms', () => {
-        const sut = new Setup(TEMPO, quarterNoteResolution);
+        const sut = new Setup(TEMPO, quarterNoteResolution, this.tempoLock);
 
         const result = sut.getStepInMS();
 
@@ -20,7 +20,7 @@ describe('Setup tests', () => {
       });
 
       it('And is an eighth, And tempo is 100 bpm, Then result should be 0.3 ms', () => {
-        const sut = new Setup(TEMPO, eighthNoteResolution);
+        const sut = new Setup(TEMPO, eighthNoteResolution, this.tempoLock);
 
         const result = sut.getStepInMS();
 
@@ -28,7 +28,7 @@ describe('Setup tests', () => {
       });
 
       it('And is a sixteenth, And tempo is 100 bpm, Then result should be 0.15 ms', () => {
-        const sut = new Setup(TEMPO, sixteenthNoteResolution);
+        const sut = new Setup(TEMPO, sixteenthNoteResolution, this.tempoLock);
 
         const result = sut.getStepInMS();
 
@@ -38,7 +38,7 @@ describe('Setup tests', () => {
 
     describe('When a triplet resolution is chosen', () => {
       it('And is an eighth note, And tempo is 100 bpm, Then result should be 0.201 ms', () => {
-        const sut = new Setup(TEMPO, tripletEighthNoteResolution);
+        const sut = new Setup(TEMPO, tripletEighthNoteResolution, this.tempoLock);
 
         const result = sut.getStepInMS();
 
@@ -46,7 +46,7 @@ describe('Setup tests', () => {
       });
 
       it('And is a sixteenth note, And tempo is 100 bpm, Then result should be 0.1005 ms', () => {
-        const sut = new Setup(TEMPO, tripletSixteenthNoteResolution);
+        const sut = new Setup(TEMPO, tripletSixteenthNoteResolution, this.tempoLock);
 
         const result = sut.getStepInMS();
 
@@ -55,7 +55,7 @@ describe('Setup tests', () => {
     });
 
     it('When tempo modifier is on, Then tempo should reflect', () => {
-      const sut = new Setup(TEMPO, quarterNoteResolution);
+      const sut = new Setup(TEMPO, quarterNoteResolution, this.tempoLock);
 
       const result = sut.getStepInMS();
 

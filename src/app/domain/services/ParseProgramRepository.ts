@@ -27,7 +27,8 @@ export class ParseProgramRepository implements IProgramRepository {
           return {
             tempo: x.tempo,
             resolutionId: x.resolution.id,
-            beats: x.beats
+            beats: x.beats,
+            tempoLock: x.tempoLock
           };
         })
       }, {
@@ -89,10 +90,8 @@ export class ParseProgramRepository implements IProgramRepository {
   }
 
   private parseToDomainStep(s: any): Step {
-    const step = new Step();
-    step.tempo = s.tempo;
-    step.beats = s.beats;
-    step.resolution = ResolutionOptions.find(r => r.id === s.resolutionId);
+    const step = new Step(s.tempo, s.beats, ResolutionOptions.find(r => r.id === s.resolutionId));
+    step.tempoLock = s.tempoLock;
 
     return step;
   }

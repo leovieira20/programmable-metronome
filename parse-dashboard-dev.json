@@ -2,8 +2,8 @@
   "apps": [
     {
       "serverURL": "http://localhost:1337/parse",
-      "appId": "appId",
-      "masterKey": "masterKey",
+      "appId": "FE5D56ED-8A46-4ECD-95E8-4E1D106EE775",
+      "masterKey": "46A5AD3E-6CFC-4EF0-A988-1B1555315C2C",
       "appName": "Programmable Metronome"
     }
   ]
