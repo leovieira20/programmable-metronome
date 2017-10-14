@@ -2,6 +2,18 @@ var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var app = express();
 
+if (!process.env.DB_URL) {
+  console.log('No DB_URL');
+}
+
+if (!process.env.APP_ID) {
+  console.log('No APP_ID');
+}
+
+if (!process.env.MASTER_KEY) {
+  console.log('No MASTER_KEY');
+}
+
 var api = new ParseServer({
   databaseURI: process.env.DB_URL,
   cloud: 'cloud-functions/main.js',
