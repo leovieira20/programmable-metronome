@@ -7,6 +7,7 @@
     "ng-server": "ng server",
     "start": "node server.js",
     "start-dev": "node server-dev.js & ng serve",
+    "start-prod": "npm run postinstall & npm run start",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
