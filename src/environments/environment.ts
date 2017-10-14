@@ -6,6 +6,6 @@
 export const environment = {
   production: false,
   facebookAppId: '1912458242407694',
-  parseAppId: 'appId',
+  parseAppId: 'FE5D56ED-8A46-4ECD-95E8-4E1D106EE775',
   parseUrl: 'http://localhost:1337/parse'
 };

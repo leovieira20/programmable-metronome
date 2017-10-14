@@ -15,8 +15,8 @@ if (!process.env.MASTER_KEY) {
 }
 
 var api = new ParseServer({
-  databaseURI: process.env.DB_URL,
   cloud: 'cloud-functions/main.js',
+  databaseURI: process.env.DB_URL,
   appId: process.env.APP_ID,
   masterKey: process.env.MASTER_KEY,
   serverURL: 'https://pgmb-metronome.herokuapp.com/parse'
