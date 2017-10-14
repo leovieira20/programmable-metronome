@@ -1,8 +1,5 @@
-import {Component, EventEmitter, Input} from '@angular/core';
-import {IProgramRepository} from '../../../domain/services/IProgramRepository';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Step} from '../../../domain/entities/Step';
-import {IUserRepository} from '../../../domain/services/IUserRepository';
-import {MaterializeAction} from 'angular2-materialize';
 import {Program} from '../../../domain/entities/Program';
 
 @Component({
@@ -26,39 +23,21 @@ import {Program} from '../../../domain/entities/Program';
         </li>
       </ul>
     </div>
-
-    <div materialize [materializeParams]="['You need to login to save the program',3000]" [materializeActions]="toastActions"></div>
   `
 })
 export class SchedulerItemListComponent {
   @Input() program: Program;
-  isBusy: boolean;
-  toastActions = new EventEmitter<string | MaterializeAction>();
+  @Input() isBusy: boolean;
+  @Output() onProgramSaved = new EventEmitter();
 
-  constructor(private programRepository: IProgramRepository, private userRepository: IUserRepository) {
+  constructor() {
   }
 
   saveProgram() {
-    if (this.userRepository.getCurrentUser()) {
-      this.save();
-    } else {
-      this.showPleaseLogInToast();
-    }
+    this.onProgramSaved.next();
   }
 
   removeStep(s: Step) {
     this.program.steps.splice(this.program.steps.indexOf(s), 1);
-  }
-
-  showPleaseLogInToast() {
-    this.toastActions.emit('toast');
-  }
-
-  private save() {
-    this.isBusy = true;
-    this.programRepository.save(this.program, this.userRepository.getCurrentUser()).subscribe(null, error => this.isBusy = false, () => {
-      this.program.name = '';
-      this.isBusy = false;
-    });
   }
 }
