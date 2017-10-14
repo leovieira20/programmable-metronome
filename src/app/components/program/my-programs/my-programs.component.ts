@@ -6,7 +6,20 @@ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-my-programs',
-  templateUrl: './my-programs.component.html'
+  template: `
+    <div class="col s12">
+      <ul class="collection">
+        <li *ngFor="let p of programs; let ix = index" class="collection-item">
+          <div>
+            <span (click)="loadProgram(p)">Name: {{p.name}}</span>
+            <div class="secondary-content" (click)="removeProgram(ix)">
+              <i class="material-icons">delete</i>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  `
 })
 export class MyProgramsComponent implements OnInit {
   programs: [Program];

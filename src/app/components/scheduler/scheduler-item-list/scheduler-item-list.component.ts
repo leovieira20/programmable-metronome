@@ -1,43 +1,43 @@
-import {Component, EventEmitter, Input} from '@angular/core';
-import {IProgramRepository} from '../../../domain/services/IProgramRepository';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Step} from '../../../domain/entities/Step';
-import {IUserRepository} from '../../../domain/services/IUserRepository';
-import {MaterializeAction} from 'angular2-materialize';
 import {Program} from '../../../domain/entities/Program';
 
 @Component({
   selector: 'app-scheduler-item-list',
-  templateUrl: './scheduler-item-list.component.html'
+  template: `
+    <div class="row">
+      <div class="col s9">
+        <input type="text" [(ngModel)]="program.name">
+      </div>
+      <div class="col s3">
+        <button class="waves-effect waves-light btn" (click)="saveProgram()" [disabled]="isBusy || !program.name">Save
+          Program
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <ul class="collection">
+        <li *ngFor="let s of program.steps" class="collection-item" [class.active]="s.isActive">
+          <app-scheduler-item [step]="s" (onStepRemoved)="removeStep($event)"></app-scheduler-item>
+        </li>
+      </ul>
+    </div>
+  `
 })
 export class SchedulerItemListComponent {
   @Input() program: Program;
-  isBusy: boolean;
-  toastActions = new EventEmitter<string | MaterializeAction>();
+  @Input() isBusy: boolean;
+  @Output() onProgramSaved = new EventEmitter();
 
-  constructor(private programRepository: IProgramRepository, private userRepository: IUserRepository) {
+  constructor() {
   }
 
   saveProgram() {
-    if (this.userRepository.getCurrentUser()) {
-      this.save();
-    } else {
-      this.showPleaseLogInToast();
-    }
+    this.onProgramSaved.next();
   }
 
   removeStep(s: Step) {
     this.program.steps.splice(this.program.steps.indexOf(s), 1);
-  }
-
-  showPleaseLogInToast() {
-    this.toastActions.emit('toast');
-  }
-
-  private save() {
-    this.isBusy = true;
-    this.programRepository.save(this.program, this.userRepository.getCurrentUser()).subscribe(null, error => this.isBusy = false, () => {
-      this.program.name = '';
-      this.isBusy = false;
-    });
   }
 }

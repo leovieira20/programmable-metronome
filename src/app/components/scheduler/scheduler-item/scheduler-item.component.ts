@@ -3,7 +3,13 @@ import {Step} from '../../../domain/entities/Step';
 
 @Component({
   selector: 'app-scheduler-item',
-  templateUrl: './scheduler-item.component.html'
+  template: `
+    <div>Tempo: {{step.tempo}} Resolution: {{step.resolution.name}} Beats: {{step.beats}}
+      <a href="#" class="secondary-content" (click)="removeStep(step)">
+        <i class="material-icons">delete</i>
+      </a>
+    </div>
+  `
 })
 export class SchedulerItemComponent {
   @Input() public step: Step;

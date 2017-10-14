@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
-import {Metronome} from '../../lib/metronome';
+import {Metronome} from '../../domain/entities/metronome';
 import ResolutionOptions from '../../domain/entities/resolutionOptions';
 import {IStepProvider} from '../../domain/entities/IStepProvider';
 import {Setup} from '../../domain/entities/Setup';

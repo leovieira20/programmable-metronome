@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable, Subscription} from 'rxjs/Rx';
 import {Bus} from './Bus';
 import {AudioContextService} from './AudioContextService';
-import {Setup} from '../domain/entities/Setup';
-import {IStepProvider} from '../domain/entities/IStepProvider';
+import {Setup} from './Setup';
+import {IStepProvider} from './IStepProvider';
 import {Subject} from 'rxjs/Subject';
 
 @Injectable()
@@ -77,8 +77,6 @@ export class Metronome {
   }
 
   private calculateNextNote(programme: Setup) {
-    const noteResolution = programme.noteResolution;
-    const millisecondsPerBeat = 60 / programme.tempo;
-    this.nextNoteTime += (millisecondsPerBeat * noteResolution.duration) * (noteResolution.isTriplet ? 0.67 : 1);
+    this.nextNoteTime += programme.getStepInMS();
   }
 }
