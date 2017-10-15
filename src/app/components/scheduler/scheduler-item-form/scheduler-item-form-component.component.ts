@@ -1,8 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import ResolutionOptions from '../../../domain/entities/resolutionOptions';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Setup} from '../../../domain/entities/Setup';
-import {Step} from "../../../domain/entities/Step";
+import {Step} from '../../../domain/entities/Step';
 
 @Component({
   selector: 'app-scheduler-item-form',

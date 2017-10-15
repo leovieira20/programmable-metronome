@@ -21,12 +21,12 @@ describe('Program tests', () => {
       expect(firstStep.isActive).toBeFalsy();
       expect(secondStep.isActive).toBeFalsy();
 
-      programWithTwoSteps.getCurrentSetup();
+      programWithTwoSteps.getNextStep(this.tempoModifier);
 
       expect(firstStep.isActive).toBeTruthy();
       expect(secondStep.isActive).toBeFalsy();
 
-      programWithTwoSteps.getCurrentSetup();
+      programWithTwoSteps.getNextStep(this.tempoModifier);
 
       expect(firstStep.isActive).toBeFalsy();
       expect(secondStep.isActive).toBeTruthy();
@@ -37,7 +37,7 @@ describe('Program tests', () => {
     it('When global tempo modifier is off, Then step tempo is kept', () => {
       programWithTwoSteps.tempoModifier = 1;
 
-      const setup = programWithTwoSteps.getCurrentSetup().getNextSetup();
+      const setup = programWithTwoSteps.getNextStep(this.tempoModifier).getNextStep(this.tempoModifier);
 
       expect(setup.tempo).toBe(firstStep.tempo);
     });
@@ -45,7 +45,7 @@ describe('Program tests', () => {
     it('When global modifier is on, Then step tempo is changed', () => {
       programWithTwoSteps.tempoModifier = 0.5;
 
-      const setup = programWithTwoSteps.getCurrentSetup().getNextSetup();
+      const setup = programWithTwoSteps.getNextStep(this.tempoModifier).getNextStep(this.tempoModifier);
 
       expect(setup.tempoModifier).toBe(0.5);
     });

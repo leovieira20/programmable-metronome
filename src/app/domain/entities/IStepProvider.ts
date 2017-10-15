@@ -1,5 +1,5 @@
-import {Setup} from './Setup';
+import {Step} from './Step';
 
 export interface IStepProvider {
-  getNextStep(): Setup;
+  getNextStep(): Step;
 }

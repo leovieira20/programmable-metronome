@@ -1,34 +1,44 @@
 import {NoteResolution} from './noteResolution';
-import {Setup} from './Setup';
+import {AccentType} from './accentType';
 
 export class Step {
-  private _setup: Setup;
+  private _currentBeat = 0;
 
   isActive: boolean;
   resolutionId: string;
   tempoModifier: number;
+  accentType: any;
 
   constructor(public tempo: number,
               public beats: number,
               public resolution: NoteResolution,
               public tempoLock: boolean = false) {
-    this.createSetup();
   }
 
-  getNextSetup(tempoModifier: number): Setup {
-    return this._setup.getNextSetup(tempoModifier);
-  }
+  getNextStep(tempoModifier: number = 100): Step {
+    this._currentBeat++;
+    this.tempoModifier = tempoModifier;
+    this.accentType = this._currentBeat % this.resolution.beatMultiplier === 0 ? AccentType.BEAT_HEAD : AccentType.SUB_BEAT;
 
-  hasNextSetup(): boolean {
-    return this._setup.hasNextSetup();
+    if (this._currentBeat === 1) {
+      this.isActive = true;
+    } else if (this._currentBeat > this.beats) {
+      this.isActive = false;
+      this._currentBeat = 0;
+      return null;
+    }
+
+    return this;
   }
 
   toggleTempoLock() {
     this.tempoLock = !this.tempoLock;
-    this._setup.toggleTempoLock();
   }
 
-  private createSetup() {
-    this._setup = new Setup(this.tempo, this.resolution, this.beats, this.tempoLock);
+  getStepInMS(): number {
+    const noteResolution = this.resolution;
+    const millisecondsPerBeat = 60 / this.tempo;
+    const tripletCalculation = (millisecondsPerBeat * noteResolution.duration) * (noteResolution.isTriplet ? 0.67 : 1);
+    return this.tempoLock ? tripletCalculation : tripletCalculation / (this.tempoModifier / 100);
   }
 }

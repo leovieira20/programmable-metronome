@@ -5,9 +5,8 @@ import {Step} from '../../domain/entities/Step';
 import {Router} from '@angular/router';
 import {IProgramRepository} from '../../domain/services/IProgramRepository';
 import {Program} from '../../domain/entities/Program';
-import {Setup} from "../../domain/entities/Setup";
-import {MaterializeAction} from "angular2-materialize";
-import {IUserRepository} from "../../domain/services/IUserRepository";
+import {MaterializeAction} from 'angular2-materialize';
+import {IUserRepository} from '../../domain/services/IUserRepository';
 
 @Component({
   selector: 'app-scheduler',
@@ -89,8 +88,8 @@ export class SchedulerComponent implements IStepProvider, OnInit {
     }
   }
 
-  getNextStep(): Setup {
-    return this.program.getCurrentSetup();
+  getNextStep(): Step {
+    return this.program.getNextStep();
   }
 
   private showAlert(message: string) {

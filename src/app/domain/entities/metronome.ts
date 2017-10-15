@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {Observable, Subscription} from 'rxjs/Rx';
 import {Bus} from './Bus';
 import {AudioContextService} from './AudioContextService';
-import {Setup} from './Setup';
 import {IStepProvider} from './IStepProvider';
 import {Subject} from 'rxjs/Subject';
+import {Step} from './Step';
 
 @Injectable()
 export class Metronome {
@@ -76,7 +76,7 @@ export class Metronome {
     }
   }
 
-  private calculateNextNote(programme: Setup) {
+  private calculateNextNote(programme: Step) {
     this.nextNoteTime += programme.getStepInMS();
   }
 }
