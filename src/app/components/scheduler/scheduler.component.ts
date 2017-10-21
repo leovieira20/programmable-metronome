@@ -101,7 +101,6 @@ export class SchedulerComponent implements IStepProvider, OnInit {
     this.isBusy = true;
     this.programRepository.save(this.program, this.userRepository.getCurrentUser())
       .subscribe(null, error => this.isBusy = false, () => {
-        this.program.name = '';
         this.isBusy = false;
       });
   }

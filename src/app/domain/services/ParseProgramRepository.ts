@@ -20,6 +20,7 @@ export class ParseProgramRepository implements IProgramRepository {
       const p = new ParseProgram();
 
       p.save({
+        objectId: program.id,
         name: program.name,
         tempoModifier: program.tempoModifier,
         owner: currentUser,
