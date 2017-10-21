@@ -18,7 +18,7 @@ export class Step {
   getNextStep(tempoModifier: number = 100): Step {
     this._currentBeat++;
     this.tempoModifier = tempoModifier;
-    this.accentType = this._currentBeat % this.resolution.beatMultiplier === 0 ? AccentType.BEAT_HEAD : AccentType.SUB_BEAT;
+    this.accentType = this.defineAccentType();
 
     if (this._currentBeat === 1) {
       this.isActive = true;
@@ -40,5 +40,13 @@ export class Step {
     const millisecondsPerBeat = 60 / this.tempo;
     const tripletCalculation = (millisecondsPerBeat * noteResolution.duration) * (noteResolution.isTriplet ? 0.67 : 1);
     return this.tempoLock ? tripletCalculation : tripletCalculation / (this.tempoModifier / 100);
+  }
+
+  private defineAccentType() {
+    if (this._currentBeat === 1) {
+      return AccentType.BEAT_HEAD;
+    } else {
+      return AccentType.SUB_BEAT;
+    }
   }
 }
