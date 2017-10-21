@@ -33,7 +33,7 @@ export class AudioListener {
                     audioSource.buffer = this.metronomeSounds[0];
                     break;
                 case AccentType.BEAT_HEAD:
-                    audioSource.buffer = this.metronomeSounds[2];
+                    audioSource.buffer = this.metronomeSounds[0];
                     break;
                 case AccentType.SUB_BEAT:
                     audioSource.buffer = this.metronomeSounds[1];
