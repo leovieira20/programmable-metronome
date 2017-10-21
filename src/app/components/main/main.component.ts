@@ -1,19 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Bus} from '../../domain/entities/Bus';
-import {AudioContextService} from '../../domain/entities/AudioContextService';
 import {MetronomeComponent} from '../metronome/metronome.component';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {Metronome} from '../../domain/entities/metronome';
-import {AudioListener} from '../../domain/listeners/audioListener';
 import {SchedulerComponent} from '../scheduler/scheduler.component';
 import {GlobalControlsComponent} from '../global-controls/global-controls.component';
-import {environment} from '../../../environments/environment';
-
-const parse = require('parse');
 
 @Component({
   selector: 'app-main',
-  providers: [Bus, Metronome, AudioContextService, AudioListener],
+  providers: [Metronome],
   template: `
     <app-nav-bar></app-nav-bar>
     <div class="row">
@@ -51,23 +45,9 @@ export class MainComponent implements OnInit {
 
   public gainAmount = 5;
   public tempo: number;
-  public isPlaying: boolean;
   public resolution = 4;
 
-  constructor(private hotKeys: HotkeysService,
-              private audioService: AudioContextService,
-              private bus: Bus,
-              audioListener: AudioListener) {
-
-    parse.initialize(environment.parseAppId);
-    parse.serverURL = environment.parseUrl;
-
-    parse.FacebookUtils.init({
-      appId: environment.facebookAppId,
-      cookie: true,
-      xfbml: true,
-      version: 'v2.3'
-    });
+  constructor(private hotKeys: HotkeysService) {
   }
 
   ngOnInit(): void {

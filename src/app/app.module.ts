@@ -19,6 +19,10 @@ import {ParseProgramRepository} from './domain/services/ParseProgramRepository';
 import {IProgramRepository} from './domain/services/IProgramRepository';
 import {IUserRepository} from './domain/services/IUserRepository';
 import {ParseUserRepository} from './domain/services/ParseUserRepository';
+import {Bus} from './domain/entities/Bus';
+import {AudioContextService} from './domain/entities/AudioContextService';
+import {AudioListener} from './domain/listeners/audioListener';
+import {environment} from '../environments/environment';
 
 const appRoutes: Routes = [
   {path: 'my-programs', component: MyProgramsComponent},
@@ -26,6 +30,7 @@ const appRoutes: Routes = [
   {path: '**', redirectTo: ''}
 ];
 
+const parse = require('parse');
 
 @NgModule({
   declarations: [
@@ -50,10 +55,27 @@ const appRoutes: Routes = [
     ReactiveFormsModule
   ],
   providers: [
+    Bus,
+    AudioContextService,
+    AudioListener,
     {provide: IProgramRepository, useClass: ParseProgramRepository},
     {provide: IUserRepository, useClass: ParseUserRepository}
   ],
   bootstrap: [ShellComponent]
 })
 export class AppModule {
+
+  constructor(bus: Bus,
+              audioService: AudioContextService,
+              audioListener: AudioListener) {
+    parse.initialize(environment.parseAppId);
+    parse.serverURL = environment.parseUrl;
+
+    parse.FacebookUtils.init({
+      appId: environment.facebookAppId,
+      cookie: true,
+      xfbml: true,
+      version: 'v2.3'
+    });
+  }
 }
