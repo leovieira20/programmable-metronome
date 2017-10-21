@@ -1,36 +1,32 @@
-<form [formGroup]="stepForm" novalidate class="col s12 no-padding">
-  <div class="row">
-    <div class="input-field col s12 m3">
-      <input
-        type="number"
-        [ngClass]="{'invalid': stepForm.get('tempo').invalid}"
-        formControlName="tempo">
-      <label>Tempo</label>
-    </div>
-
-    <div class="input-field col s12 m4">
-      <select #resolutionSelect formControlName="resolution" materialize="material_select">
-        <option value="" disabled selected>Resolution</option>
-        <option *ngFor="let option of resolutionOptions" [value]="option.id">{{option.name}}</option>
-      </select>
-    </div>
-
-    <div class="input-field col s12 m3">
-      <input
-        type="number"
-        class="validate"
-        [ngClass]="{'invalid': stepForm.get('beats').invalid}"
-        formControlName="beats">
-      <label>Beats</label>
-    </div>
-
-    <div class="input-field col s12 m2">
-      <button
-        class="waves-effect waves-light btn"
-        (click)="addStep()"
-        [disabled]="stepForm.invalid">
-        Add
-      </button>
-    </div>
+<div [formGroup]="stepForm" class="col s12 no-padding">
+  <div class="input-field col s12 m3">
+    <input
+      type="number"
+      [ngClass]="{'invalid': stepForm.get('tempo').invalid}"
+      formControlName="tempo">
+    <label>Tempo</label>
   </div>
-</form>
+
+  <div class="input-field col s12 m4">
+    <app-resolution-options (onResolutionChanged)="setResolution($event)"></app-resolution-options>
+  </div>
+
+  <div class="input-field col s12 m3">
+    <input
+      type="number"
+      class="validate"
+      [ngClass]="{'invalid': stepForm.get('beats').invalid}"
+      formControlName="beats">
+    <label>Beats</label>
+  </div>
+
+  <div class="input-field col s12 m2">
+    <button
+      class="waves-effect waves-light btn"
+      (click)="addStep()"
+      [disabled]="stepForm.invalid">
+      Add
+    </button>
+  </div>
+</div>
+

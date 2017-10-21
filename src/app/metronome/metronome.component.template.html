@@ -1,26 +1,27 @@
 <div class="card">
-    <div class="card-content">
-        <div class="row">
-            <h1 class="center-align"><span>{{tempo}}</span>BPM</h1>
-        </div>
-        <div class="row">
-            <label>Tempo:</label>
-            <div class="input-field">
-                <p class="range-field">
-                    <input type="range" min="30.0" max="250.0" step="1" [(value)]="tempo">
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field">
-                <select [(ngModel)]="selectedResolutionId" materialize="material_select" (change)="changeResolution($event.target.value)">
-                    <option value="" disabled selected>Resolution</option>
-                    <option *ngFor="let option of resolutionOptions" [value]="option.id">{{option.name}}</option>
-                </select>
-            </div>
-        </div>
+  <div class="card-content">
+    <div class="row">
+      <h1 class="center-align"><span>{{tempo}}</span>BPM</h1>
     </div>
-    <div class="card-action">
-      <a class="waves-effect waves-light btn-large" (click)="togglePlaying()">{{(isPlayingStatus | async) ? "stop" : "start"}}</a>
+    <div class="row">
+      <label>Tempo:</label>
+      <div class="input-field">
+        <p class="range-field">
+          <input type="range" min="30.0" max="250.0" step="1" [(value)]="tempo">
+        </p>
+      </div>
     </div>
+    <div class="row">
+      <div class="input-field">
+        <app-resolution-options (onResolutionChanged)="changeResolution($event)"></app-resolution-options>
+      </div>
+    </div>
+  </div>
+  <div class="card-action">
+    <a
+      class="waves-effect waves-light btn-large"
+      (click)="togglePlaying()">
+      {{(isPlayingStatus | async) ? "stop" : "start"}}
+    </a>
+  </div>
 </div>

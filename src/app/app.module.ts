@@ -23,6 +23,7 @@ import {ShellComponent} from './common/shell/ShellComponent';
 import {GlobalControlsComponent} from './common/global-controls/global-controls.component';
 import {NavBarComponent} from './common/nav-bar/nav-bar.component';
 import {environment} from '../environments/environment.DEV';
+import { ResolutionOptionsComponent } from './common/resolution-options/resolution-options.component';
 
 const appRoutes: Routes = [
   {path: 'my-programs', component: MyProgramsComponent},
@@ -43,7 +44,8 @@ const parse = require('parse');
     SchedulerItemListComponent,
     SchedulerItemFormComponent,
     NavBarComponent,
-    MyProgramsComponent
+    MyProgramsComponent,
+    ResolutionOptionsComponent
   ],
   imports: [
     BrowserModule,
