@@ -1,9 +1,9 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
-import {Metronome} from '../../domain/entities/metronome';
-import ResolutionOptions from '../../domain/entities/resolutionOptions';
-import {IStepProvider} from '../../domain/entities/IStepProvider';
+import {Metronome} from '../domain/entities/metronome';
+import ResolutionOptions from '../domain/entities/resolutionOptions';
+import {IStepProvider} from '../domain/entities/IStepProvider';
 import {Observable} from 'rxjs/Observable';
-import {Step} from '../../domain/entities/Step';
+import {Step} from '../domain/entities/Step';
 
 @Component({
   selector: 'app-metronome',

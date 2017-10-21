@@ -1,12 +1,12 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
-import {Metronome} from '../../domain/entities/metronome';
-import {IStepProvider} from '../../domain/entities/IStepProvider';
-import {Step} from '../../domain/entities/Step';
+import {Metronome} from '../domain/entities/metronome';
+import {IStepProvider} from '../domain/entities/IStepProvider';
+import {Step} from '../domain/entities/Step';
 import {Router} from '@angular/router';
-import {IProgramRepository} from '../../domain/services/IProgramRepository';
-import {Program} from '../../domain/entities/Program';
+import {IProgramRepository} from '../domain/services/IProgramRepository';
+import {Program} from '../domain/entities/Program';
 import {MaterializeAction} from 'angular2-materialize';
-import {IUserRepository} from '../../domain/services/IUserRepository';
+import {IUserRepository} from '../domain/services/IUserRepository';
 
 @Component({
   selector: 'app-scheduler',

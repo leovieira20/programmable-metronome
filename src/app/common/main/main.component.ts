@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MetronomeComponent} from '../metronome/metronome.component';
+import {MetronomeComponent} from '../../metronome/metronome.component';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {Metronome} from '../../domain/entities/metronome';
-import {SchedulerComponent} from '../scheduler/scheduler.component';
+import {SchedulerComponent} from '../../scheduler/scheduler.component';
 import {GlobalControlsComponent} from '../global-controls/global-controls.component';
 
 @Component({

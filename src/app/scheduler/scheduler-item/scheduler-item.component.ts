@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Step} from '../../../domain/entities/Step';
+import {Step} from '../../domain/entities/Step';
 
 @Component({
   selector: 'app-scheduler-item',
