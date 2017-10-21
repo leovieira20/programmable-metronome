@@ -13,7 +13,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "all-dev-tools": "node server-dev.js & ng serve & parse-dashboard --config parse-dashboard-dev.json",
-    "postinstall": "ng build --aot -prod"
+    "postinstall": "node scripts/generate-config-file.js; ng build --aot -prod"
   },
   "private": true,
   "dependencies": {
