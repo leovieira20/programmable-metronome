@@ -18,11 +18,11 @@ import {ParseUserRepository} from './domain/services/ParseUserRepository';
 import {Bus} from './domain/entities/Bus';
 import {AudioContextService} from './domain/entities/AudioContextService';
 import {AudioListener} from './domain/listeners/audioListener';
-import {environment} from '../environments/environment';
 import {MainComponent} from './common/main/main.component';
 import {ShellComponent} from './common/shell/ShellComponent';
 import {GlobalControlsComponent} from './common/global-controls/global-controls.component';
 import {NavBarComponent} from './common/nav-bar/nav-bar.component';
+import {environment} from '../environments/environment.DEV';
 
 const appRoutes: Routes = [
   {path: 'my-programs', component: MyProgramsComponent},
