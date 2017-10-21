@@ -14,6 +14,10 @@ import {IUserRepository} from '../domain/services/IUserRepository';
     <div class="card">
       <div class="card-content">
         <div class="row">
+          <button class="waves-effect waves-light btn" (click)="loadProgram()" [disabled]="isBusy">Load Program</button>
+        </div>
+
+        <div class="row">
           <div class="input-field col s12">
             <input type="number" [(ngModel)]="program.tempoModifier">
             <label>Global Tempo Modifier (%)</label>
@@ -24,17 +28,18 @@ import {IUserRepository} from '../domain/services/IUserRepository';
           <app-scheduler-item-form (onStepCreated)="addStep($event)"></app-scheduler-item-form>
         </div>
 
-        <div class="section">
-          <h5>Steps</h5>
-        </div>
+        <div *ngIf="program.steps.length > 0">
+          <div class="section">
+            <h5>Steps</h5>
+          </div>
 
-        <div class="row">
-          <button class="waves-effect waves-light btn" (click)="loadProgram()" [disabled]="isBusy">Load Program</button>
-        </div>
-
-        <div class="row" *ngIf="program.steps.length > 0">
-          <app-scheduler-item-list [isBusy]="isBusy" [program]="program"
-                                   (onProgramSaved)="saveProgram()"></app-scheduler-item-list>
+          <div class="row">
+            <app-scheduler-item-list
+              [isBusy]="isBusy"
+              [program]="program"
+              (onProgramSaved)="saveProgram()">
+            </app-scheduler-item-list>
+          </div>
         </div>
       </div>
     </div>
