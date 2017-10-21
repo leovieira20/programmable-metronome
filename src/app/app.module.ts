@@ -24,6 +24,7 @@ import {GlobalControlsComponent} from './common/global-controls/global-controls.
 import {NavBarComponent} from './common/nav-bar/nav-bar.component';
 import {environment} from '../environments/environment.DEV';
 import { ResolutionOptionsComponent } from './common/resolution-options/resolution-options.component';
+import { StepFormComponent } from './common/step-form/step-form.component';
 
 const appRoutes: Routes = [
   {path: 'my-programs', component: MyProgramsComponent},
@@ -45,7 +46,8 @@ const parse = require('parse');
     SchedulerItemFormComponent,
     NavBarComponent,
     MyProgramsComponent,
-    ResolutionOptionsComponent
+    ResolutionOptionsComponent,
+    StepFormComponent
   ],
   imports: [
     BrowserModule,
