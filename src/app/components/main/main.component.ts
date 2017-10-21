@@ -17,13 +17,23 @@ const parse = require('parse');
   template: `
     <app-nav-bar></app-nav-bar>
     <div class="row">
-      <app-global-controls (onToggleScheduler)="toggleScheduler($event)"></app-global-controls>
+      <app-global-controls></app-global-controls>
     </div>
     <div class="row">
-      <div class="col s12 m7">
+      <div class="col s12">
+        <ul class="tabs" materialize="tabs">
+          <li class="tab col s6">
+            <a href="#schedulerTab" (click)="$event.preventDefault();toggleScheduler(false)">Scheduler</a>
+          </li>
+          <li class="tab col s6">
+            <a href="#metronomeTab" (click)="$event.preventDefault();toggleScheduler(true)">Metronome</a>
+          </li>
+        </ul>
+      </div>
+      <div id="schedulerTab" class="col s12">
         <app-scheduler></app-scheduler>
       </div>
-      <div class="col s12 m5">
+      <div id="metronomeTab" class="col s12">
         <app-metronome></app-metronome>
       </div>
     </div>
@@ -62,11 +72,12 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.configureHotKeys();
+    this.toggleScheduler(false);
   }
 
-  public toggleScheduler(schedulerModeValue: boolean) {
-    this.metronomeComponent.toggleState(schedulerModeValue);
-    this.schedulerComponent.toggleState(schedulerModeValue);
+  public toggleScheduler(isMetronomeActive: boolean) {
+    this.metronomeComponent.toggleState(isMetronomeActive);
+    this.schedulerComponent.toggleState(isMetronomeActive);
   }
 
   private configureHotKeys() {
