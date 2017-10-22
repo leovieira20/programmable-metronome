@@ -13,7 +13,8 @@
     </div>
     <div class="row">
       <div class="input-field">
-        <app-resolution-options (onResolutionChanged)="changeResolution($event)"></app-resolution-options>
+        <app-resolution-options [selectedResolutionId]="selectedResolutionId"
+                                (onResolutionChanged)="changeResolution($event)"></app-resolution-options>
       </div>
     </div>
   </div>

@@ -4,11 +4,43 @@ import ResolutionOptions from '../domain/entities/resolutionOptions';
 import {IStepProvider} from '../domain/entities/IStepProvider';
 import {Observable} from 'rxjs/Observable';
 import {Step} from '../domain/entities/step';
-import {Bus} from "../domain/entities/bus";
+import {Bus} from '../domain/entities/bus';
 
 @Component({
   selector: 'app-metronome',
-  templateUrl: './metronome.component.template.html',
+  template: `
+    <div class="card">
+      <div class="card-content">
+        <div class="row">
+          <h1 class="center-align"><span>{{tempo}}</span>BPM</h1>
+        </div>
+        <div class="row">
+          <label>Tempo:</label>
+          <div class="input-field">
+            <p class="range-field">
+              <input type="range" min="30.0" max="250.0" step="1" [(value)]="tempo">
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field">
+            <app-resolution-options
+              [selectedResolutionId]="selectedResolutionId"
+              (onResolutionChanged)="changeResolution($event)">
+            </app-resolution-options>
+          </div>
+        </div>
+      </div>
+      <div class="card-action">
+        <a
+          class="waves-effect waves-light btn-large"
+          (click)="togglePlaying()">
+          {{(isPlayingStatus | async) ? "stop" : "start"}}
+        </a>
+      </div>
+    </div>
+
+  `
 })
 export class MetronomeComponent implements OnInit, IStepProvider {
   private _tempoAmount = 5;
