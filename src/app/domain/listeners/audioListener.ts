@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Bus} from '../entities/Bus';
+import {Bus} from '../entities/bus';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {AudioContextService} from '../entities/AudioContextService';
+import {AudioContextService} from '../entities/audioContextService';
 import {AccentType} from '../entities/accentType';
 
 @Injectable()

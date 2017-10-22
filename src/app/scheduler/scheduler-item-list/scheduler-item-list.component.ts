@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Step} from '../../domain/entities/Step';
-import {Program} from '../../domain/entities/Program';
+import {Step} from '../../domain/entities/step';
+import {Program} from '../../domain/entities/program';
 
 @Component({
   selector: 'app-scheduler-item-list',

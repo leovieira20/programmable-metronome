@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {Step} from '../../domain/entities/Step';
+import {Step} from '../../domain/entities/step';
 import {StepFormComponent} from '../../common/step-form/step-form.component';
 
 @Component({

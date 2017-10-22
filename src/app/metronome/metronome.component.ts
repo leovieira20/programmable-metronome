@@ -3,7 +3,8 @@ import {Metronome} from '../domain/entities/metronome';
 import ResolutionOptions from '../domain/entities/resolutionOptions';
 import {IStepProvider} from '../domain/entities/IStepProvider';
 import {Observable} from 'rxjs/Observable';
-import {Step} from '../domain/entities/Step';
+import {Step} from '../domain/entities/step';
+import {Bus} from "../domain/entities/bus";
 
 @Component({
   selector: 'app-metronome',
@@ -20,7 +21,8 @@ export class MetronomeComponent implements OnInit, IStepProvider {
   public tempoChange = new EventEmitter();
   public isPlayingStatus: Observable<boolean>;
 
-  constructor(private metronome: Metronome) {
+  constructor(private metronome: Metronome,
+              private bus: Bus) {
   }
 
   ngOnInit(): void {
@@ -38,7 +40,7 @@ export class MetronomeComponent implements OnInit, IStepProvider {
   }
 
   togglePlaying(): void {
-    this.metronome.togglePlay();
+    this.bus.playbackStateChannel.next();
   }
 
   changeResolution(resolutionId: number) {

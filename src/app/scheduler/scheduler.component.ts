@@ -1,12 +1,13 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Metronome} from '../domain/entities/metronome';
 import {IStepProvider} from '../domain/entities/IStepProvider';
-import {Step} from '../domain/entities/Step';
+import {Step} from '../domain/entities/step';
 import {Router} from '@angular/router';
 import {IProgramRepository} from '../domain/services/IProgramRepository';
-import {Program} from '../domain/entities/Program';
+import {Program} from '../domain/entities/program';
 import {MaterializeAction} from 'angular2-materialize';
 import {IUserRepository} from '../domain/services/IUserRepository';
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-scheduler',
@@ -53,6 +54,7 @@ import {IUserRepository} from '../domain/services/IUserRepository';
 })
 export class SchedulerComponent implements IStepProvider, OnInit {
   private _isActive = false;
+  private metronomePlaybackStatusSubscription: Subscription;
   alertMessage: string;
   isBusy: boolean;
   program: Program = new Program();
@@ -72,8 +74,16 @@ export class SchedulerComponent implements IStepProvider, OnInit {
 
   toggleState(isMetronomeActive: boolean) {
     this._isActive = !isMetronomeActive;
+
     if (this._isActive) {
       this.metronome.setStepProvider(this);
+      this.metronomePlaybackStatusSubscription = this.metronome.isPlayingStatus.subscribe(isPlaying => {
+        if (!isPlaying) {
+          this.resetProgram();
+        }
+      });
+    } else {
+      this.metronomePlaybackStatusSubscription.unsubscribe();
     }
   }
 
@@ -99,6 +109,10 @@ export class SchedulerComponent implements IStepProvider, OnInit {
 
   getNextStep(): Step {
     return this.program.getNextStep();
+  }
+
+  private resetProgram() {
+    this.program.reset();
   }
 
   private showAlert(message: string) {

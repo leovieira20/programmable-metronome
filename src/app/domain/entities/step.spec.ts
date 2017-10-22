@@ -1,4 +1,4 @@
-import {Step} from './Step';
+import {Step} from './step';
 import ResolutionOptions from './resolutionOptions';
 import {AccentType} from './accentType';
 
@@ -40,6 +40,20 @@ describe('Step tests', () => {
       const secondStep = step.getNextStep();
 
       expect(secondStep.accentType).toBe(AccentType.SUB_BEAT);
+    });
+  });
+
+  describe('Given Reset is being tested', () => {
+    it('When I reset a step with more than one step, Then it should revert to initial state', () => {
+      step = new Step(1, 2, ResolutionOptions[0]);
+
+      const s = step.getNextStep();
+
+      expect(step.isActive).toBeTruthy();
+
+      step.reset();
+
+      expect(step.isActive).toBeFalsy();
     });
   });
 });

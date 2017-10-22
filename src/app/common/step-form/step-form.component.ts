@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import ResolutionOptions from '../../domain/entities/resolutionOptions';
-import {Step} from '../../domain/entities/Step';
+import {Step} from '../../domain/entities/step';
 import {NoteResolution} from '../../domain/entities/noteResolution';
 import {Subscription} from 'rxjs/Subscription';
 

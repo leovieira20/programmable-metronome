@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subscription} from 'rxjs/Rx';
-import {Bus} from './Bus';
-import {AudioContextService} from './AudioContextService';
+import {Bus} from './bus';
+import {AudioContextService} from './audioContextService';
 import {IStepProvider} from './IStepProvider';
 import {Subject} from 'rxjs/Subject';
-import {Step} from './Step';
+import {Step} from './step';
 
 @Injectable()
 export class Metronome {
@@ -22,6 +22,9 @@ export class Metronome {
               private audioContextService: AudioContextService) {
 
     this.tick = Observable.interval(this.lookahead);
+    bus.playbackStateChannel.subscribe(() => {
+      this.togglePlay();
+    });
   }
 
   public togglePlay() {

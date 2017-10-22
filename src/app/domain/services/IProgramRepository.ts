@@ -1,4 +1,4 @@
-import {Program} from '../entities/Program';
+import {Program} from '../entities/program';
 import {Observable} from 'rxjs/Observable';
 
 export abstract class IProgramRepository {

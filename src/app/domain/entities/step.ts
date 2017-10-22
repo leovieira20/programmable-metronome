@@ -23,8 +23,7 @@ export class Step {
     if (this._currentBeat === 1) {
       this.isActive = true;
     } else if (this._currentBeat > this.beats) {
-      this.isActive = false;
-      this._currentBeat = 0;
+      this.resetToInitialState();
       return null;
     }
 
@@ -42,11 +41,20 @@ export class Step {
     return this.tempoLock ? tripletCalculation : tripletCalculation / (this.tempoModifier / 100);
   }
 
+  reset() {
+    this.resetToInitialState();
+  }
+
   private defineAccentType() {
     if (this._currentBeat === 1) {
       return AccentType.BEAT_HEAD;
     } else {
       return AccentType.SUB_BEAT;
     }
+  }
+
+  private resetToInitialState() {
+    this.isActive = false;
+    this._currentBeat = 0;
   }
 }

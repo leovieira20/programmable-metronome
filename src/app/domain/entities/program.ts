@@ -1,4 +1,4 @@
-import {Step} from './Step';
+import {Step} from './step';
 
 export class Program {
   private _tempoModifier: number;
@@ -28,6 +28,11 @@ export class Program {
 
     this._activeStepIx++;
     return this.getNextStep();
+  }
+
+  reset() {
+    this._activeStepIx = 0;
+    this.steps.find(x => x.isActive).reset();
   }
 
   set tempoModifier(t: number) {

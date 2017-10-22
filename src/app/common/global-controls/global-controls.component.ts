@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Bus} from '../../domain/entities/Bus';
+import {Bus} from '../../domain/entities/bus';
 
 @Component({
   selector: 'app-global-controls',

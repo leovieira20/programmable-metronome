@@ -4,6 +4,7 @@ import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {Metronome} from '../../domain/entities/metronome';
 import {SchedulerComponent} from '../../scheduler/scheduler.component';
 import {GlobalControlsComponent} from '../global-controls/global-controls.component';
+import {Bus} from "../../domain/entities/bus";
 
 @Component({
   selector: 'app-main',
@@ -47,7 +48,8 @@ export class MainComponent implements OnInit {
   public tempo: number;
   public resolution = 4;
 
-  constructor(private hotKeys: HotkeysService) {
+  constructor(private hotKeys: HotkeysService,
+              private bus: Bus) {
   }
 
   ngOnInit(): void {
@@ -55,14 +57,14 @@ export class MainComponent implements OnInit {
     this.toggleScheduler(false);
   }
 
-  public toggleScheduler(isMetronomeActive: boolean) {
+  toggleScheduler(isMetronomeActive: boolean) {
     this.metronomeComponent.toggleState(isMetronomeActive);
     this.schedulerComponent.toggleState(isMetronomeActive);
   }
 
   private configureHotKeys() {
     this.hotKeys.add(new Hotkey('space', (): boolean => {
-      this.metronomeComponent.togglePlaying();
+      this.bus.playbackStateChannel.next();
       return false;
     }));
 

@@ -1,5 +1,5 @@
-import {Step} from './Step';
-import {Program} from './Program';
+import {Step} from './step';
+import {Program} from './program';
 import ResolutionOptions from './resolutionOptions';
 
 describe('Program tests', () => {
@@ -48,6 +48,23 @@ describe('Program tests', () => {
       const setup = programWithTwoSteps.getNextStep(this.tempoModifier).getNextStep(this.tempoModifier);
 
       expect(setup.tempoModifier).toBe(0.5);
+    });
+  });
+
+  describe('Given reset is being tested', () => {
+    it('When I reset program, Then next step is the first one', () => {
+      secondStep.beats = 2;
+
+      programWithTwoSteps.getNextStep();
+      programWithTwoSteps.getNextStep();
+
+      programWithTwoSteps.reset();
+
+      const step = programWithTwoSteps.getNextStep();
+
+      expect(step).toBe(firstStep);
+      expect(step.isActive).toBeTruthy();
+      expect(secondStep.isActive).toBeFalsy();
     });
   });
 
