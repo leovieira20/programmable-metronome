@@ -6,12 +6,12 @@ import {Program} from '../../domain/entities/program';
   selector: 'app-scheduler-item-list',
   template: `
     <div class="row">
-      <div class="col s7 m9">
+      <div class="col s7 m10">
         <input type="text" [(ngModel)]="program.name">
       </div>
-      <div class="col s5 m3">
-        <button class="waves-effect waves-light btn" (click)="saveProgram()" [disabled]="isBusy || !program.name">Save
-          Program
+      <div class="col s5 m2">
+        <button class="waves-effect waves-light btn" (click)="saveProgram()" [disabled]="isBusy || !program.name">
+          Save Program
         </button>
       </div>
     </div>
