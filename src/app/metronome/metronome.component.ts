@@ -45,6 +45,7 @@ export class MetronomeComponent implements OnInit, IStepProvider {
     const resolution = this.resolutionOptions.find(x => x.id === Number(resolutionId));
     this.selectedResolutionId = resolutionId;
 
+    this._step.beats = resolution.beatMultiplier;
     this._step.resolution = resolution;
   }
 
