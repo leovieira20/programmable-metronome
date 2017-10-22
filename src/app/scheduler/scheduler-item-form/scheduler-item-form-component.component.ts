@@ -5,18 +5,20 @@ import {StepFormComponent} from '../../common/step-form/step-form.component';
 @Component({
   selector: 'app-scheduler-item-form',
   template: `
-    <div class="col s12 no-padding">
-      <app-step-form (onStepStatusChanged)="reflectToStepStatusChange($event)"></app-step-form>
+    <form (submit)="addStep()">
+      <div class="col s12 no-padding">
+        <app-step-form (onStepStatusChanged)="reflectToStepStatusChange($event)"></app-step-form>
 
-      <div class="input-field col s12 m2">
-        <button
-          class="waves-effect waves-light btn"
-          (click)="addStep()"
-          [disabled]="!isFormValid">
-          Add
-        </button>
+        <div class="input-field col s12 m2">
+          <button
+            class="waves-effect waves-light btn"
+            (click)="addStep()"
+            [disabled]="!isFormValid">
+            Add
+          </button>
+        </div>
       </div>
-    </div>
+    </form>
   `
 })
 export class SchedulerItemFormComponent implements OnInit {
@@ -37,7 +39,8 @@ export class SchedulerItemFormComponent implements OnInit {
     this.isFormValid = isValid;
   }
 
-  addStep() {
+  addStep(): boolean {
     this.onStepCreated.emit(this.stepFormComponent.getStep());
+    return false;
   }
 }
