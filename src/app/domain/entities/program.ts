@@ -36,13 +36,9 @@ export class Program {
   }
 
   set tempoModifier(t: number) {
-    if (t < 20) {
-      t = 20;
-    } else if (t > 300) {
-      t = 300;
+    if (t >= 20 && t <= 300) {
+      this._tempoModifier = t;
     }
-
-    this._tempoModifier = t;
   }
 
   get tempoModifier(): number {

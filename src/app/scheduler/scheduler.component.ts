@@ -16,7 +16,12 @@ import {Subscription} from 'rxjs/Subscription';
       <div class="card-content">
         <div class="row">
           <div class="input-field col s7 m10">
-            <input type="number" [(ngModel)]="program.tempoModifier">
+            <input
+              type="number"
+              #tempoModifier
+              (keyup.enter)="tempoModifier.blur()"
+              (blur)="changeTempoModifier($event.target.value)"
+              [value]="program.tempoModifier">
             <label class="hide-on-small-only">Global Tempo Modifier (%)</label>
             <label class="hide-on-med-and-up">Tempo Modifier (%)</label>
           </div>
@@ -110,6 +115,10 @@ export class SchedulerComponent implements IStepProvider, OnInit {
 
   getNextStep(): Step {
     return this.program.getNextStep();
+  }
+
+  changeTempoModifier(tempo: number) {
+    this.program.tempoModifier = Number(tempo);
   }
 
   private resetProgram() {
