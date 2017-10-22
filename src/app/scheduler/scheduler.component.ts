@@ -7,7 +7,7 @@ import {IProgramRepository} from '../domain/services/IProgramRepository';
 import {Program} from '../domain/entities/program';
 import {MaterializeAction} from 'angular2-materialize';
 import {IUserRepository} from '../domain/services/IUserRepository';
-import {Subscription} from "rxjs/Subscription";
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-scheduler',
