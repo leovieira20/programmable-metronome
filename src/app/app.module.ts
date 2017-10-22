@@ -6,7 +6,6 @@ import {SchedulerComponent} from './scheduler/scheduler.component';
 import {MetronomeComponent} from './metronome/metronome.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {SchedulerItemComponent} from './scheduler/scheduler-item/scheduler-item.component';
 import {SchedulerItemListComponent} from './scheduler/scheduler-item-list/scheduler-item-list.component';
 import {SchedulerItemFormComponent} from './scheduler/scheduler-item-form/scheduler-item-form-component.component';
 import {MyProgramsComponent} from './program/my-programs/my-programs.component';
@@ -41,7 +40,6 @@ const parse = require('parse');
     SchedulerComponent,
     MetronomeComponent,
     GlobalControlsComponent,
-    SchedulerItemComponent,
     SchedulerItemListComponent,
     SchedulerItemFormComponent,
     NavBarComponent,

@@ -35,6 +35,14 @@ export class Program {
     this.steps.find(x => x.isActive).reset();
   }
 
+  updateStep(s: Step) {
+    const oldStep = this.steps.find(x => x.id === s.id);
+
+    oldStep.tempo = s.tempo;
+    oldStep.beats = s.beats;
+    oldStep.resolution = s.resolution;
+  }
+
   set tempoModifier(t: number) {
     if (t >= 20 && t <= 300) {
       this._tempoModifier = t;

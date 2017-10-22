@@ -17,14 +17,24 @@ import {Program} from '../../domain/entities/program';
     </div>
 
     <div class="row">
-      <ul class="collection">
-        <li *ngFor="let s of program.steps" class="collection-item" [class.active]="s.isActive">
-          <app-scheduler-item
-            [step]="s"
-            (onStepRemoved)="removeStep($event)">
-          </app-scheduler-item>
-        </li>
-      </ul>
+      <table class="bordered">
+        <thead></thead>
+        <tbody>
+        <tr *ngFor="let s of program.steps" [class.active-step]="s.isActive">
+          <td>
+            <app-step-form [step]="s" (onStepChanged)="updateStep($event)"></app-step-form>
+          </td>
+          <td>
+            <a href="#" class="secondary-content" (click)="removeStep(s)">
+              <i class="material-icons">delete</i>
+            </a>
+            <a href="#" class="secondary-content" (click)="lockTempo(s)">
+              <i class="material-icons">{{s.tempoLock ? 'lock' : 'lock_open'}}</i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   `
 })
@@ -42,5 +52,13 @@ export class SchedulerItemListComponent {
 
   removeStep(s: Step) {
     this.program.steps.splice(this.program.steps.indexOf(s), 1);
+  }
+
+  lockTempo(s: Step) {
+    s.toggleTempoLock();
+  }
+
+  updateStep(s: Step) {
+    this.program.updateStep(s);
   }
 }

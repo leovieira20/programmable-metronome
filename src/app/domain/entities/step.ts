@@ -1,5 +1,8 @@
 import {NoteResolution} from './noteResolution';
 import {AccentType} from './accentType';
+import ResolutionOptions from "./resolutionOptions";
+
+const uuid = require('uuid/v1');
 
 export class Step {
   private _currentBeat = 0;
@@ -9,10 +12,19 @@ export class Step {
   tempoModifier: number;
   accentType: any;
 
+  static createBasicStep(): Step {
+    const s = new Step(120, 4, ResolutionOptions[0]);
+    s.id = null;
+
+    return s;
+  }
+
   constructor(public tempo: number,
               public beats: number,
               public resolution: NoteResolution,
-              public tempoLock: boolean = false) {
+              public tempoLock: boolean = false,
+              public id: string = null) {
+    this.id = id || uuid();
   }
 
   getNextStep(tempoModifier: number = 100): Step {
