@@ -15,11 +15,11 @@ import {Subscription} from 'rxjs/Subscription';
     <div class="card">
       <div class="card-content">
         <div class="row">
-          <div class="input-field col s10">
+          <div class="input-field col s7 m10">
             <input type="number" [(ngModel)]="program.tempoModifier">
             <label>Global Tempo Modifier (%)</label>
           </div>
-          <div class="input-field col s2">
+          <div class="input-field col s5 m2">
             <button
               class="waves-effect waves-light btn"
               (click)="loadProgram()"
