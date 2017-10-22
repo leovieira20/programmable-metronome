@@ -17,7 +17,8 @@ import {Subscription} from 'rxjs/Subscription';
         <div class="row">
           <div class="input-field col s7 m10">
             <input type="number" [(ngModel)]="program.tempoModifier">
-            <label>Global Tempo Modifier (%)</label>
+            <label class="hide-on-small-only">Global Tempo Modifier (%)</label>
+            <label class="hide-on-med-and-up">Tempo Modifier (%)</label>
           </div>
           <div class="input-field col s5 m2">
             <button
