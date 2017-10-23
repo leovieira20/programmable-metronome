@@ -1,29 +1,34 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Bus} from '../../domain/entities/Bus';
-import {AudioContextService} from '../../domain/entities/AudioContextService';
-import {MetronomeComponent} from '../metronome/metronome.component';
+import {MetronomeComponent} from '../../metronome/metronome.component';
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 import {Metronome} from '../../domain/entities/metronome';
-import {AudioListener} from '../../domain/listeners/audioListener';
-import {SchedulerComponent} from '../scheduler/scheduler.component';
+import {SchedulerComponent} from '../../scheduler/scheduler.component';
 import {GlobalControlsComponent} from '../global-controls/global-controls.component';
-import {environment} from '../../../environments/environment';
-
-const parse = require('parse');
+import {Bus} from "../../domain/entities/bus";
 
 @Component({
   selector: 'app-main',
-  providers: [Bus, Metronome, AudioContextService, AudioListener],
+  providers: [Metronome],
   template: `
     <app-nav-bar></app-nav-bar>
     <div class="row">
-      <app-global-controls (onToggleScheduler)="toggleScheduler($event)"></app-global-controls>
+      <app-global-controls></app-global-controls>
     </div>
     <div class="row">
-      <div class="col s12 m7">
+      <div class="col s12">
+        <ul class="tabs" materialize="tabs">
+          <li class="tab col s6">
+            <a href="#schedulerTab" (click)="$event.preventDefault();toggleScheduler(false)">Scheduler</a>
+          </li>
+          <li class="tab col s6">
+            <a href="#metronomeTab" (click)="$event.preventDefault();toggleScheduler(true)">Metronome</a>
+          </li>
+        </ul>
+      </div>
+      <div id="schedulerTab" class="col s12">
         <app-scheduler></app-scheduler>
       </div>
-      <div class="col s12 m5">
+      <div id="metronomeTab" class="col s12">
         <app-metronome></app-metronome>
       </div>
     </div>
@@ -41,37 +46,25 @@ export class MainComponent implements OnInit {
 
   public gainAmount = 5;
   public tempo: number;
-  public isPlaying: boolean;
   public resolution = 4;
 
   constructor(private hotKeys: HotkeysService,
-              private audioService: AudioContextService,
-              private bus: Bus,
-              audioListener: AudioListener) {
-
-    parse.initialize(environment.parseAppId);
-    parse.serverURL = environment.parseUrl;
-
-    parse.FacebookUtils.init({
-      appId: environment.facebookAppId,
-      cookie: true,
-      xfbml: true,
-      version: 'v2.3'
-    });
+              private bus: Bus) {
   }
 
   ngOnInit(): void {
     this.configureHotKeys();
+    this.toggleScheduler(false);
   }
 
-  public toggleScheduler(schedulerModeValue: boolean) {
-    this.metronomeComponent.toggleState(schedulerModeValue);
-    this.schedulerComponent.toggleState(schedulerModeValue);
+  toggleScheduler(isMetronomeActive: boolean) {
+    this.metronomeComponent.toggleState(isMetronomeActive);
+    this.schedulerComponent.toggleState(isMetronomeActive);
   }
 
   private configureHotKeys() {
     this.hotKeys.add(new Hotkey('space', (): boolean => {
-      this.metronomeComponent.togglePlaying();
+      this.bus.playbackStateChannel.next();
       return false;
     }));
 

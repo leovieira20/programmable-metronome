@@ -1,0 +1,20 @@
+@import '../node_modules/materialize-css/sass/components/color';
+
+$primary-color: color("blue-grey", "darken-3") !default;
+$primary-color-light: lighten($primary-color, 15%) !default;
+$primary-color-dark: darken($primary-color, 15%) !default;
+
+$secondary-color: color("blue-grey", "darken-1") !default;
+$success-color: color("blue-grey", "darken-1") !default;
+
+$error-color: color(" red", "darken-4") !default;
+
+$link-color: color("blue-grey", "darken-1") !default;
+
+$roboto-font-path: '../node_modules/materialize-sass/fonts/roboto/' !default;
+
+@import '../node_modules/materialize-css/sass/materialize';
+
+.active-step {
+  background-color: color("blue-grey", "lighten-5");
+}

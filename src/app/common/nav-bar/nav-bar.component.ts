@@ -11,7 +11,8 @@ import {ParseLoginService} from '../../domain/services/ParseLoginService';
   template: `
     <nav>
       <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Programmable Metronome</a>
+        <a href="#" class="brand-logo hide-on-small-only">Programmable Metronome</a>
+        <a href="#" class="brand-logo hide-on-med-and-up">Metronome</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li>
             <div *ngIf="user; then loggedUserBlock else unloggedUserBlock"></div>

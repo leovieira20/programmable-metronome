@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Bus} from '../entities/Bus';
+import {Bus} from '../entities/bus';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {AudioContextService} from '../entities/AudioContextService';
+import {AudioContextService} from '../entities/audioContextService';
 import {AccentType} from '../entities/accentType';
 
 @Injectable()
@@ -33,7 +33,7 @@ export class AudioListener {
                     audioSource.buffer = this.metronomeSounds[0];
                     break;
                 case AccentType.BEAT_HEAD:
-                    audioSource.buffer = this.metronomeSounds[2];
+                    audioSource.buffer = this.metronomeSounds[0];
                     break;
                 case AccentType.SUB_BEAT:
                     audioSource.buffer = this.metronomeSounds[1];

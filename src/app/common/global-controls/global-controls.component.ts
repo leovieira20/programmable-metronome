@@ -1,23 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Bus} from '../../domain/entities/Bus';
+import {Bus} from '../../domain/entities/bus';
 
 @Component({
   selector: 'app-global-controls',
   template: `
-    <div class="col s3">
-      <div class="switch">
-        <label>
-          Scheduler
-          <input type="checkbox" [formControl]="schedulerMode">
-          <span class="lever"></span>
-          Metronome
-        </label>
-      </div>
-
-    </div>
-
-    <div class="col s9">
+    <div class="col s12">
       <label>Gain:</label>
       <div class="input-field">
         <p class="range-field">
@@ -29,7 +17,6 @@ import {Bus} from '../../domain/entities/Bus';
 })
 export class GlobalControlsComponent implements OnInit {
   public gainAmount = 5;
-  public schedulerMode: FormControl;
   public tempo: number;
   public isPlaying: boolean;
   public resolution = 4;
@@ -40,13 +27,6 @@ export class GlobalControlsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.schedulerMode = new FormControl();
-    this.schedulerMode.valueChanges.subscribe(x => this.toggleScheduler(x));
-    this.schedulerMode.setValue(true);
-  }
-
-  private toggleScheduler(schedulerModeValue: boolean) {
-    this.onToggleScheduler.emit(schedulerModeValue);
   }
 
   changeGainValue(amount: number) {

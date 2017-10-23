@@ -3,15 +3,15 @@ var ParseServer = require('parse-server').ParseServer;
 var app = express();
 
 if (!process.env.DB_URL) {
-  console.log('No DB_URL');
+  throw new Error('No DB_URL');
 }
 
 if (!process.env.APP_ID) {
-  console.log('No APP_ID');
+  throw new Error('No APP_ID');
 }
 
 if (!process.env.MASTER_KEY) {
-  console.log('No MASTER_KEY');
+  throw new Error('No MASTER_KEY');
 }
 
 var api = new ParseServer({

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Program} from '../../../domain/entities/Program';
-import {IProgramRepository} from '../../../domain/services/IProgramRepository';
-import {IUserRepository} from '../../../domain/services/IUserRepository';
+import {Program} from '../../domain/entities/program';
+import {IProgramRepository} from '../../domain/services/IProgramRepository';
+import {IUserRepository} from '../../domain/services/IUserRepository';
 import {Router} from '@angular/router';
 
 @Component({

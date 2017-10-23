@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {IProgramRepository} from './IProgramRepository';
-import {Program} from '../entities/Program';
+import {Program} from '../entities/program';
 import * as Parse from 'parse';
 import {Observable} from 'rxjs/Observable';
 import ResolutionOptions from '../entities/resolutionOptions';
-import {Step} from "../entities/Step";
+import {Step} from "../entities/step";
 
 @Injectable()
 export class ParseProgramRepository implements IProgramRepository {
@@ -20,15 +20,18 @@ export class ParseProgramRepository implements IProgramRepository {
       const p = new ParseProgram();
 
       p.save({
+        objectId: program.id,
         name: program.name,
+        tempoModifier: program.tempoModifier,
+        owner: currentUser,
         steps: program.steps.map(x => {
           return {
             tempo: x.tempo,
             resolutionId: x.resolution.id,
-            beats: x.beats
+            beats: x.beats,
+            tempoLock: x.tempoLock
           };
-        }),
-        owner: currentUser
+        })
       }, {
         success: x => {
           observer.next(true);
@@ -51,13 +54,14 @@ export class ParseProgramRepository implements IProgramRepository {
           observer.next(results.map(x => {
             const steps = [];
 
-            for (let s of x.get('steps')) {
+            for (const s of x.get('steps')) {
               steps.push(this.parseToDomainStep(s));
             }
 
             const p = new Program();
             p.id = x.id;
             p.name = x.get('name');
+            p.tempoModifier = x.get('tempoModifier');
             p.steps = steps;
 
             return p;
@@ -87,10 +91,8 @@ export class ParseProgramRepository implements IProgramRepository {
   }
 
   private parseToDomainStep(s: any): Step {
-    const step = new Step();
-    step.tempo = s.tempo;
-    step.beats = s.beats;
-    step.resolution = ResolutionOptions.find(r => r.id === s.resolutionId);
+    const step = new Step(s.tempo, s.beats, ResolutionOptions.find(r => r.id === s.resolutionId));
+    step.tempoLock = s.tempoLock;
 
     return step;
   }
