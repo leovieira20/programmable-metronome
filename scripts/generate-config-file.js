@@ -29,4 +29,6 @@ fs.writeFile('src/environments/environment.' + process.env.ENV_TYPE + '.ts', con
   if (err) {
     throw err;
   }
+
+  console.log(confFile);
 });

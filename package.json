@@ -9,11 +9,13 @@
     "start-dev": "node server-dev.js & ng serve",
     "start-prod": "npm run postinstall & npm run start",
     "build": "ng build",
+    "build-prod": "ng build --aot -prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "all-dev-tools": "node server-dev.js & ng serve & parse-dashboard --config parse-dashboard-dev.json",
-    "postinstall": "node scripts/generate-config-file.js; ng build --aot -prod"
+    "generate-config-files": "node scripts/generate-config-file.js",
+    "postinstall": "npm run generate-config-files & npm run build-prod"
   },
   "private": true,
   "dependencies": {
