@@ -25,4 +25,6 @@ var api = new ParseServer({
 app.use(express.static(__dirname + '/dist'));
 app.use('/parse', api);
 
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 8080, function() {
+  console.log('parse running on port ' + process.env.PORT + '.');
+});
