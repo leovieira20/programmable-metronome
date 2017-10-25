@@ -15,7 +15,7 @@
     "e2e": "ng e2e",
     "all-dev-tools": "node server-dev.js & ng serve & parse-dashboard --config parse-dashboard-dev.json",
     "generate-config-files": "node scripts/generate-config-file.js",
-    "postinstall": "npm run generate-config-files"
+    "postinstall": "npm run generate-config-files & npm run build-prod"
   },
   "private": true,
   "dependencies": {

@@ -19,7 +19,7 @@ var api = new ParseServer({
   databaseURI: process.env.DB_URL,
   appId: process.env.APP_ID,
   masterKey: process.env.MASTER_KEY,
-  serverURL: 'https://pgmb-metronome.herokuapp.com/parse'
+  serverURL: process.env.SERVER_URL
 });
 
 app.use(express.static(__dirname + '/dist'));
