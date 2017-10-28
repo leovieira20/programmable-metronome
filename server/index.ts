@@ -1,6 +1,6 @@
-var express = require('express');
-var ParseServer = require('parse-server').ParseServer;
-var app = express();
+const express = require('express');
+const ParseServer = require('parse-server').ParseServer;
+const app = express();
 
 if (!process.env.DB_URL) {
   throw new Error('No DB_URL');
@@ -14,8 +14,8 @@ if (!process.env.MASTER_KEY) {
   throw new Error('No MASTER_KEY');
 }
 
-var api = new ParseServer({
-  cloud: 'cloud-functions/main.js',
+const api = new ParseServer({
+  cloud: __dirname + '/cloud-functions/main.js',
   databaseURI: process.env.DB_URL,
   appId: process.env.APP_ID,
   masterKey: process.env.MASTER_KEY,
@@ -25,6 +25,6 @@ var api = new ParseServer({
 app.use(express.static(__dirname + '/dist'));
 app.use('/parse', api);
 
-app.listen(process.env.PORT || 8080, function() {
-  console.log('parse running on port ' + process.env.PORT + '.');
+app.listen(process.env.PARSE_SERVER_PORT || 8080, () => {
+  console.log('parse running on port 1337.');
 });
