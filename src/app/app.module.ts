@@ -24,6 +24,8 @@ import {NavBarComponent} from './common/nav-bar/nav-bar.component';
 import {environment} from '../environments/environment.DEV';
 import { ResolutionOptionsComponent } from './common/resolution-options/resolution-options.component';
 import { StepFormComponent } from './common/step-form/step-form.component';
+import {IProfileRepository} from './domain/services/IProfileRepository';
+import {ParseProfileRepository} from './domain/services/ParseProfileRepository';
 
 const appRoutes: Routes = [
   {path: 'my-programs', component: MyProgramsComponent},
@@ -61,7 +63,8 @@ const parse = require('parse');
     AudioContextService,
     AudioListener,
     {provide: IProgramRepository, useClass: ParseProgramRepository},
-    {provide: IUserRepository, useClass: ParseUserRepository}
+    {provide: IUserRepository, useClass: ParseUserRepository},
+    {provide: IProfileRepository, useClass: ParseProfileRepository}
   ],
   bootstrap: [ShellComponent]
 })

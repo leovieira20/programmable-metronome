@@ -4,7 +4,7 @@ import {Program} from '../entities/program';
 import * as Parse from 'parse';
 import {Observable} from 'rxjs/Observable';
 import ResolutionOptions from '../entities/resolutionOptions';
-import {Step} from "../entities/step";
+import {Step} from '../entities/step';
 
 @Injectable()
 export class ParseProgramRepository implements IProgramRepository {
