@@ -9,7 +9,7 @@
     "generate-config-files": "node scripts/generate-config-file.js",
     "run.server": "nodemon dist",
     "start.server": "npm run build.server | npm run run.server",
-    "start-dev": "npm run generate-config-files && npm run start.server && ng serve",
+    "start-dev": "npm run generate-config-files && npm run start.server & ng serve",
     "start-prod": "npm run postinstall && npm run start",
     "build": "ng build",
     "build.server": "tsc -p server",

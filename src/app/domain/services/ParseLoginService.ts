@@ -3,9 +3,9 @@ import * as Parse from 'parse';
 import User = Parse.User;
 import {Injectable} from '@angular/core';
 import {IUserRepository} from './IUserRepository';
-import {IProfileRepository} from "./IProfileRepository";
+import {IProfileRepository} from './IProfileRepository';
 
-declare var FB: any;
+declare const FB: any;
 
 @Injectable()
 export class ParseLoginService implements ILoginService {
@@ -18,6 +18,8 @@ export class ParseLoginService implements ILoginService {
   login() {
     Parse.FacebookUtils.logIn('email', {
         success: (user: User) => {
+          this.userRepository.setCurrentUser(user);
+
           FB.api(`/ ${user.attributes.authData.facebook.id}`, 'get', {fields: this._fields},
             response => {
               if (!(response && !response.error)) {
@@ -25,11 +27,7 @@ export class ParseLoginService implements ILoginService {
               }
 
               this.profileRepository.save(response)
-                .subscribe(result => {
-                  if (result) {
-                    this.userRepository.setCurrentUser(user);
-                  }
-                });
+                .subscribe(null, err => console.log(err));
             });
         }
       }

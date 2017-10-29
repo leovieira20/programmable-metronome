@@ -35,8 +35,9 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.userRepository.getCurrentUser();
-    this.userRepository.user.subscribe(x => this.user = x);
+    this.userRepository.user.subscribe(x => {
+      this.user = x;
+    });
   }
 
   login() {
