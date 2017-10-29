@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {IProgramRepository} from './IProgramRepository';
 import {Program} from '../entities/program';
 import * as Parse from 'parse';
 import {Observable} from 'rxjs/Observable';
@@ -7,7 +6,7 @@ import ResolutionOptions from '../entities/resolutionOptions';
 import {Step} from '../entities/step';
 
 @Injectable()
-export class ParseProgramRepository implements IProgramRepository {
+export class ProgramRepository {
   private currentProgram: Program;
   private ClassName = 'Program';
 

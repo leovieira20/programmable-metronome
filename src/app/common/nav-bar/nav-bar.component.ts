@@ -1,13 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {IUserRepository} from '../../domain/services/IUserRepository';
-import {ILoginService} from '../../domain/services/ILoginService';
-import {ParseLoginService} from '../../domain/services/ParseLoginService';
+import {LoginService} from '../../domain/services/LoginService';
+import {UserRepository} from '../../domain/services/UserRepository';
 
 @Component({
   selector: 'app-nav-bar',
-  providers: [
-    {provide: ILoginService, useClass: ParseLoginService},
-  ],
+  providers: [LoginService],
   template: `
     <nav>
       <div class="nav-wrapper">
@@ -31,7 +28,7 @@ import {ParseLoginService} from '../../domain/services/ParseLoginService';
 export class NavBarComponent implements OnInit {
   user: any;
 
-  constructor(public userRepository: IUserRepository, private loginService: ILoginService) {
+  constructor(public userRepository: UserRepository, private loginService: LoginService) {
   }
 
   ngOnInit() {

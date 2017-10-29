@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Program} from '../../domain/entities/program';
-import {IProgramRepository} from '../../domain/services/IProgramRepository';
-import {IUserRepository} from '../../domain/services/IUserRepository';
 import {Router} from '@angular/router';
+import {ProgramRepository} from '../../domain/services/ProgramRepository';
+import {UserRepository} from '../../domain/services/UserRepository';
 
 @Component({
   selector: 'app-my-programs',
@@ -24,8 +24,8 @@ import {Router} from '@angular/router';
 export class MyProgramsComponent implements OnInit {
   programs: [Program];
 
-  constructor(private programRepository: IProgramRepository,
-              private userRepository: IUserRepository,
+  constructor(private programRepository: ProgramRepository,
+              private userRepository: UserRepository,
               private router: Router) {
   }
 

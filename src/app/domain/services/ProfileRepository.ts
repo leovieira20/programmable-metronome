@@ -1,10 +1,9 @@
-import {IProfileRepository} from './IProfileRepository';
 import {Observable} from 'rxjs/Observable';
 import * as Parse from 'parse';
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class ParseProfileRepository implements IProfileRepository {
+export class ProfileRepository {
   constructor() {
   }
 

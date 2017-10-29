@@ -1,18 +1,17 @@
-import {ILoginService} from './ILoginService';
 import * as Parse from 'parse';
 import User = Parse.User;
 import {Injectable} from '@angular/core';
-import {IUserRepository} from './IUserRepository';
-import {IProfileRepository} from './IProfileRepository';
+import {ProfileRepository} from './ProfileRepository';
+import {UserRepository} from './UserRepository';
 
 declare const FB: any;
 
 @Injectable()
-export class ParseLoginService implements ILoginService {
-  private _fields = 'email,first_name,last_name,name,gender,cover,location,relationship_status,locale,hometown';
+export class LoginService {
+  private _fields = 'email,first_name,last_name,name,gender,cover,location,relationship_status,hometown';
 
-  constructor(private userRepository: IUserRepository,
-              private profileRepository: IProfileRepository) {
+  constructor(private userRepository: UserRepository,
+              private profileRepository: ProfileRepository) {
   }
 
   login() {

@@ -3,11 +3,11 @@ import {Metronome} from '../domain/entities/metronome';
 import {IStepProvider} from '../domain/entities/IStepProvider';
 import {Step} from '../domain/entities/step';
 import {Router} from '@angular/router';
-import {IProgramRepository} from '../domain/services/IProgramRepository';
 import {Program} from '../domain/entities/program';
 import {MaterializeAction} from 'angular2-materialize';
-import {IUserRepository} from '../domain/services/IUserRepository';
 import {Subscription} from 'rxjs/Subscription';
+import {ProgramRepository} from '../domain/services/ProgramRepository';
+import {UserRepository} from '../domain/services/UserRepository';
 
 @Component({
   selector: 'app-scheduler',
@@ -68,8 +68,8 @@ export class SchedulerComponent implements IStepProvider, OnInit {
 
   constructor(private metronome: Metronome,
               private router: Router,
-              private programRepository: IProgramRepository,
-              private userRepository: IUserRepository) {
+              private programRepository: ProgramRepository,
+              private userRepository: UserRepository) {
   }
 
   ngOnInit(): void {
