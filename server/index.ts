@@ -14,6 +14,8 @@ if (!process.env.MASTER_KEY) {
   throw new Error('No MASTER_KEY');
 }
 
+const applicationPort = process.env.PARSE_SERVER_PORT || process.env.PORT || 8080;
+
 const api = new ParseServer({
   cloud: __dirname + '/cloud-functions/main.js',
   databaseURI: process.env.DB_URL,
@@ -22,9 +24,13 @@ const api = new ParseServer({
   serverURL: process.env.SERVER_URL
 });
 
-app.use(express.static(__dirname + '/dist'));
+app.use(express.static(__dirname + '/client'));
 app.use('/parse', api);
 
-app.listen(process.env.PARSE_SERVER_PORT || 8080, () => {
-  console.log('parse running on port 1337.');
+app.listen(applicationPort, (err) => {
+  if (err) {
+    throw err;
+  }
+
+  console.log(`'parse running on port ${applicationPort}.`);
 });

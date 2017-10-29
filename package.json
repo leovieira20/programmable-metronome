@@ -5,20 +5,21 @@
   "scripts": {
     "ng": "ng",
     "ng-server": "ng server",
-    "start": "node server.js",
+    "start": "node dist/index.js",
     "generate-config-files": "node scripts/generate-config-file.js",
-    "build.server": "tsc -p server",
-    "run.server": "nodemon dist-server",
+    "run.server": "nodemon dist",
     "start.server": "npm run build.server | npm run run.server",
-    "start-dev": "npm run generate-config-files & npm run start.server & ng serve",
-    "start-prod": "npm run postinstall & npm run start",
+    "start-dev": "npm run generate-config-files && npm run start.server && ng serve",
+    "start-prod": "npm run postinstall && npm run start",
     "build": "ng build",
-    "build-prod": "ng build --aot -prod",
+    "build.server": "tsc -p server",
+    "build.client": "ng build --aot -prod",
+    "build-prod": "npm run build.server && npm run build.client",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "all-dev-tools": "npm run start-dev & parse-dashboard --config parse-dashboard-dev.json",
-    "postinstall": "npm run generate-config-files & npm run build-prod"
+    "postinstall": "npm run generate-config-files && npm run build-prod"
   },
   "private": true,
   "dependencies": {
@@ -61,11 +62,12 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "mkdirp": "^0.5.1",
+    "nodemon": "^1.12.1",
     "protractor": "^5.2.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
-    "typescript": "^2.3.4",
-    "nodemon": "^1.12.1"
+    "typescript": "^2.3.4"
   },
   "engines": {
     "node": "8.4.0",
