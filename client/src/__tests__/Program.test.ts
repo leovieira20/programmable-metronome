@@ -1,6 +1,6 @@
-import { Step } from './Step';
-import { Program } from './Program';
-import { ResolutionOptions } from './ResolutionOptions';
+import { Step } from '../domain/entities/Step';
+import { Program } from '../domain/entities/Program';
+import { ResolutionOptions } from '../domain/entities/ResolutionOptions';
 
 describe('Program tests', () => {
     let programWithTwoSteps, firstStep, secondStep;

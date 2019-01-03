@@ -1,49 +1,68 @@
 import * as React from 'react';
 import Metronome from 'src/domain/entities/Metronome';
-import { IStepProvider } from 'src/domain/entities/IStepProvider';
 import { Step } from 'src/domain/entities/Step';
 import { Program } from 'src/domain/entities/Program';
 import { Subscription } from 'rxjs';
 import { ProgramRepository } from 'src/domain/services/ProgramRepository';
 import { UserRepository } from 'src/domain/services/UserRepository';
+import { Grid, Card, withStyles, CardContent, Button } from '@material-ui/core';
+import { lazyInject } from 'src/inversify.config';
 
-export default class SchedulerComponent extends React.Component implements IStepProvider {
+const styles = theme => ({
+  card: {
+    width: 500
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
+});
+
+class SchedulerComponent extends React.Component<any, any> {
   private _isActive = false;
   private metronomePlaybackStatusSubscription: Subscription;
   alertMessage: string;
   isBusy: boolean;
   program: Program = new Program();
 
-  private metronome: Metronome;
-  private programRepository: ProgramRepository;
-  private userRepository: UserRepository;
+  @lazyInject(Metronome) private _metronome: Metronome;
+  // private programRepository: ProgramRepository;
+  // private userRepository: UserRepository;
+
+  constructor(props) {
+    super(props);
+  }
 
 
   render() {
-    return <div></div>
-    // (
-    //   <div class="card">
-    //   <div class="card-content">
-    //     <div class="row">
-    //       <div class="input-field col s7 m10">
-    //         <input
-    //           type="number"
-    //           #tempoModifier
-    //           (keyup.enter)="tempoModifier.blur()"
-    //           (blur)="changeTempoModifier($event.target.value)"
-    //           [value]="program.tempoModifier">
-    //         <label class="hide-on-small-only">Global Tempo Modifier (%)</label>
-    //         <label class="hide-on-med-and-up">Tempo Modifier (%)</label>
-    //       </div>
-    //       <div class="input-field col s5 m2">
-    //         <button
-    //           class="waves-effect waves-light btn"
-    //           (click)="loadProgram()"
-    //           [disabled]="isBusy">
-    //           Load Program
-    //         </button>
-    //       </div>
-    //     </div>
+    const { classes } = this.props;
+
+    return (
+      <Grid container direction="row" justify="center">
+        <Card className={classes.card}>
+          <CardContent>
+            <input
+              type="number"
+              //  (keyup.enter)="tempoModifier.blur()"
+              //  (blur)="changeTempoModifier($event.target.value)"
+              value={this.program.tempoModifier} />
+            <label className="hide-on-small-only">Global Tempo Modifier (%)</label>
+            <label className="hide-on-med-and-up">Tempo Modifier (%)</label>
+
+            <Button
+              onClick={this.loadProgram}
+              className={classes.button}
+              disabled={this.isBusy}
+              value="contained"
+              color="primary">
+              Load Program
+             </Button>
+          </CardContent>
+        </Card>
+      </Grid>)
+
 
     //     <div class="row">
     //       <app-scheduler-item-form (onStepCreated)="addStep($event)"></app-scheduler-item-form>
@@ -70,9 +89,9 @@ export default class SchedulerComponent extends React.Component implements IStep
   }
 
   ngOnInit(): void {
-    if (this.programRepository.getCurrentProgram()) {
-      this.program = this.programRepository.getCurrentProgram();
-    }
+    // if (this.programRepository.getCurrentProgram()) {
+    //   this.program = this.programRepository.getCurrentProgram();
+    // }
   }
 
   toggleState(isMetronomeActive: boolean) {
@@ -95,19 +114,19 @@ export default class SchedulerComponent extends React.Component implements IStep
   }
 
   loadProgram() {
-    if (!this.userRepository.getCurrentUser()) {
-      this.showAlert('You need to login to load a program');
-    } else {
-      // this.router.navigate(['my-programs']);
-    }
+    // if (!this.userRepository.getCurrentUser()) {
+    //   this.showAlert('You need to login to load a program');
+    // } else {
+    //   // this.router.navigate(['my-programs']);
+    // }
   }
 
   saveProgram() {
-    if (!this.userRepository.getCurrentUser()) {
-      this.showAlert('You need to login to save the program');
-    } else {
-      this.save();
-    }
+    // if (!this.userRepository.getCurrentUser()) {
+    //   this.showAlert('You need to login to save the program');
+    // } else {
+    //   this.save();
+    // }
   }
 
   getNextStep(): Step {
@@ -135,3 +154,5 @@ export default class SchedulerComponent extends React.Component implements IStep
     //   });
   }
 }
+
+export default withStyles(styles)(SchedulerComponent);

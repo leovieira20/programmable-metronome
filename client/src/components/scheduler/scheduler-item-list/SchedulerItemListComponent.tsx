@@ -1,47 +1,60 @@
 import * as React from 'react';
 import { Step } from 'src/domain/entities/Step';
 import { Program } from 'src/domain/entities/Program';
+import { withStyles, Button } from '@material-ui/core';
 
-export class SchedulerItemListComponent {
+const styles = theme => ({
+  card: {
+      width: 500
+  },
+  button: {
+      margin: theme.spacing.unit,
+  },
+  input: {
+      display: 'none',
+  },
+});
+
+class SchedulerItemListComponent extends React.Component<any, any> {
   program: Program;
   isBusy: boolean;
   onProgramSaved: any;
 
   render() {
+    return <div></div>;
     // return (
-    //   <div class="row">
-    //     <div class="col s7 m10">
-    //       <input type="text" [(ngModel)]="program.name">
+    //   <div className="row">
+    //     <div className="col s7 m10">
+    //       <input type="text">
     //   </div>
-    //     <div class="col s5 m2">
-    //       <button class="waves-effect waves-light btn" (click)="saveProgram()" [disabled]="isBusy || !program.name">
+    //     <div className="col s5 m2">
+    //       <Button className="waves-effect waves-light btn" onClick={this.saveProgram} disabled={this.isBusy || this.!program.name}>
     //         Save Program
-    //     </button>
+    //     </Button>
     //   </div>
     // </div >
 
-    //   <div class="row">
-    //     <table class="bordered">
+    //   <div className="row">
+    //     <table className="bordered">
     //       <thead></thead>
     //       <tbody>
-    //         <tr *ngFor="let s of program.steps" [class.active-step]="s.isActive">
+    //         <tr>
     //       <td>
-    //           <app-step-form [step]="s" (onStepChanged)="updateStep($event)"></app-step-form>
+    //           <app-step-form step="s" (onStepChanged)="updateStep($event)"></app-step-form>
     //       </td>
     //       <td>
-    //         <a href="#" class="secondary-content" (click)="removeStep(s)">
-    //           <i class="material-icons">delete</i>
+    //         <a href="#" className="secondary-content" onClick={(s) => this.removeStep(s)}>
+    //           <i className="material-icons">delete</i>
     //         </a>
-    //       <a href="#" class="secondary-content" (click)="lockTempo(s)">
-    //           <i class="material-icons">{{ s.tempoLock ? 'lock' : 'lock_open' }}</i>
+    //       <a href="#" className="secondary-content" onClick={(s) => this.lockTempo(s)}>
+    //           <i className="material-icons">{{ s.tempoLock ? 'lock' : 'lock_open' }}</i>
     //         </a>
     //       </td>
     //     </tr >
     //     </tbody >
     //   </table >
     // </div >
-    // )
-    return <div></div>
+    // )    
   }
 
   saveProgram() {
@@ -60,3 +73,5 @@ export class SchedulerItemListComponent {
     this.program.updateStep(s);
   }
 }
+
+export default withStyles(styles)(SchedulerItemListComponent);

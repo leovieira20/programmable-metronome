@@ -28,7 +28,7 @@ export default class AudioListener {
 
             switch (args.accentType) {
                 case AccentType.BAR_HEAD:
-                    audioSource.buffer = this.metronomeSounds[0];
+                    audioSource.buffer = this.metronomeSounds[1];
                     break;
                 case AccentType.BEAT_HEAD:
                     audioSource.buffer = this.metronomeSounds[0];

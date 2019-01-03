@@ -3,9 +3,6 @@ import NavBar from './NavBarComponent';
 import SimpleTabs from './TabsComponent';
 import MetronomeComponent from 'src/components/metronome/MetronomeComponent';
 import SchedulerComponent from '../scheduler/SchedulerComponent';
-// import { inject } from 'inversify';
-// import TYPES from '../../../ioc/types';
-// import { Bus } from 'src/domain/entities/Bus';
 
 export default class Main extends React.Component {
 

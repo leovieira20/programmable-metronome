@@ -1,6 +1,6 @@
-import { Step } from "./Step";
-import { ResolutionOptions } from './ResolutionOptions';
-import { AccentType } from './AccentType';
+import { Step } from "../domain/entities/Step";
+import { ResolutionOptions } from '../domain/entities/ResolutionOptions';
+import { AccentType } from '../domain/entities/AccentType';
 
 describe('Step tests', () => {
     let step: Step;

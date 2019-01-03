@@ -6,10 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-// import { inject } from 'inversify';
-// import TYPES from '../../../ioc/types';
-// import { UserRepository } from 'src/domain/services/UserRepository';
-// import { LoginService } from 'src/domain/services/LoginService';
 
 const styles = {
   root: {

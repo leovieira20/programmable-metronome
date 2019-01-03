@@ -1,19 +1,17 @@
 import * as React from 'react';
-import { IStepProvider } from 'src/domain/entities/IStepProvider';
-import { Step } from 'src/domain/entities/Step';
-import { ResolutionOptions } from 'src/domain/entities/ResolutionOptions';
-import ResolutionOptionsComponent from 'src/components/common/ResolutionOptionsComponent';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Grid, Card, CardContent, CardActions, CardHeader } from '@material-ui/core';
-import { MetronomeStore } from '../../stores/MetronomeStore';
-import { injectable } from 'inversify';
-import TYPES from '../../ioc/types';
-import { observer } from 'mobx-react';
 import "reflect-metadata";
+import { Step } from 'src/domain/entities/Step';
+import { ResolutionOptions } from 'src/domain/entities/ResolutionOptions';
+import ResolutionOptionsComponent from 'src/components/common/ResolutionOptionsComponent';
+import { injectable } from 'inversify';
+import { observer } from 'mobx-react';
 import { lazyInject } from '../../inversify.config';
 import Metronome from '../../domain/entities/Metronome';
 import { HotKeys } from "react-hotkeys";
+import { SimpleStepProvider } from 'src/domain/entities/step-providers/SimpleStepProvider';
 
 const styles = theme => ({
     card: {
@@ -29,18 +27,15 @@ const styles = theme => ({
 
 @injectable()
 @observer
-class MetronomeComponent extends React.Component<any, any> implements IStepProvider {
-    private _tempoAmount = 5;
-    // private _isActive = false;
-    private _step: Step;
-
-    @lazyInject(TYPES.MetronomeStore) private _store: MetronomeStore;
+class MetronomeComponent extends React.Component<any, any> {
     @lazyInject(Metronome) private _metronome: Metronome;
 
-    public selectedResolutionId: number;
-    public resolutionOptions = ResolutionOptions;
+    // private _isActive = false;    
+    private _tempoAmount = 5;
+    private _stepProvider: SimpleStepProvider;
+    private resolutionOptions = ResolutionOptions;
 
-    private map = {
+    private keymap = {
         'togglePlay': 'space',
         'increaseTempo': [']', '+'],
         'decreaseTempo': ['[', '-'],
@@ -57,18 +52,23 @@ class MetronomeComponent extends React.Component<any, any> implements IStepProvi
         this.changeResolution = this.changeResolution.bind(this);
 
         this.state = {
-            selectedResolutionId: this.resolutionOptions[0].id
+            selectedResolutionId: this.resolutionOptions[0].id,
+            isPlaying: this._metronome.isPlaying,
+            tempo: this._metronome.tempo
         }
+
+        const initialResolution = this.resolutionOptions.find(x => x.id === this.state.selectedResolutionId)!;
+        var step = new Step(this._metronome.tempo, 1, initialResolution);
+        this._stepProvider = new SimpleStepProvider(step);
     }
 
     componentWillMount(): void {
-        this._metronome.setStepProvider(this);        
-        this._step = new Step(this._store.tempo, 1, this.resolutionOptions.find(x => x.id === this.selectedResolutionId)!);
+        this._metronome.setStepProvider(this._stepProvider);
     }
 
     render() {
         const { classes } = this.props;
-        const tempo = this._store.tempo;
+        const tempo = this.state.tempo;
 
         const handlers = {
             'togglePlay': this.togglePlay,
@@ -78,7 +78,7 @@ class MetronomeComponent extends React.Component<any, any> implements IStepProvi
         };
 
         return (
-            <HotKeys keyMap={this.map} handlers={handlers}>
+            <HotKeys keyMap={this.keymap} handlers={handlers}>
                 <Grid container direction="row" justify="center">
                     <Card className={classes.card}>
                         <CardHeader title={`${tempo} BPM`} />
@@ -98,7 +98,7 @@ class MetronomeComponent extends React.Component<any, any> implements IStepProvi
 
                             <ResolutionOptionsComponent
                                 selectedResolutionId={this.state.selectedResolutionId}
-                                onResolutionChanged={res => this.changeResolution({ key: res})} />
+                                onResolutionChanged={res => this.changeResolution({ key: res })} />
                         </CardContent>
                         <CardActions>
                             <Button
@@ -106,7 +106,7 @@ class MetronomeComponent extends React.Component<any, any> implements IStepProvi
                                 color="primary"
                                 className={classes.button}
                                 onClick={this.togglePlay}>
-                                {this._store.isPlaying ? "stop" : "start"}
+                                {this.state.isPlaying ? "stop" : "start"}
                             </Button>
                         </CardActions>
                     </Card>
@@ -122,20 +122,18 @@ class MetronomeComponent extends React.Component<any, any> implements IStepProvi
         // }
     }
 
-    getNextStep(): Step {
-        const s = this._step.getNextStep();
-        if (!s) {
-            return this._step.getNextStep()!;
-        }
-        return s;
-    }
-
     private togglePlay(): void {
-        this._store.toggleIsPlaying();
+        this._metronome.togglePlay();
+        this.setState({
+            isPlaying: this._metronome.isPlaying
+        })
     }
 
     private setTempo(e: any) {
-        this._store.setTempo(e.target.value);
+        this._metronome.tempo = Number(e.target.value);
+        this.setState({
+            tempo: this._metronome.tempo
+        });
     }
 
     private increaseTempo() {
@@ -150,22 +148,23 @@ class MetronomeComponent extends React.Component<any, any> implements IStepProvi
         const { key } = event;
         const resId = Number(key);
         
-        const resolution = this.resolutionOptions.find(x => x.id === Number(resId))!;
-
         this.setState({
             selectedResolutionId: resId
-        })        
+        });
 
-        this._step.setResolution(resolution);        
+        const resolution = this.resolutionOptions.find(x => x.id === resId)!;
+        this._metronome.resolution = resolution;
     }
 
     private changeTempoValue(tempoAmount: number) {
-        if ((this._store.tempo === 30 && tempoAmount < 1) || (this._store.tempo === 250 && tempoAmount > 1)) {
+        if ((this._metronome.tempo === 30 && tempoAmount < 1) || (this._metronome.tempo === 250 && tempoAmount > 1)) {
             return;
         }
 
-        this._store.increaseTempoBy(tempoAmount);
-        this._step.tempo = this._store.tempo;
+        this._metronome.increaseTempoBy(tempoAmount);
+        this.setState({
+            tempo: this._metronome.tempo
+        });
     }
 }
 

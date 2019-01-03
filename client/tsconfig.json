@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["reflect-metadata"],
+    "types": ["reflect-metadata", "jest"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "baseUrl": ".",
@@ -30,6 +30,7 @@
     "acceptance-tests",
     "webpack",
     "jest",
-    "src/setupTests.ts"
+    "src/setupTests.ts",
+    "src/__tests__"
   ]
 }
